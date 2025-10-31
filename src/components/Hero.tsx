@@ -4,7 +4,7 @@ import heroImage from "@/assets/hero-doctor.jpg";
 
 export const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center">
+    <section className="relative min-h-screen flex items-center pt-20">
       <div className="absolute inset-0 bg-gradient-to-br from-primary-glow/20 via-background to-background" />
       
       <div className="container relative z-10 mx-auto px-4 py-20">
