@@ -4,8 +4,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 const features = [
   {
     icon: Users,
-    title: "Unified User Portal",
-    description: "Single identity system where users can be both doctors and patients. Seamless role management.",
+    title: "Dual App System",
+    description: "Dedicated apps for doctors and patients. Secure role-based access with seamless identity management.",
     color: "text-primary",
     bg: "bg-primary/10",
   },
