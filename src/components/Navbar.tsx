@@ -25,6 +25,7 @@ export const Navbar = () => {
           className={`transition-all duration-300 ${
             showButton ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8 pointer-events-none'
           }`}
+          onClick={() => window.open('https://forms.gle/ZHETRTEAm72hZv366', '_blank')}
         >
           Join the Waitlist
         </Button>
