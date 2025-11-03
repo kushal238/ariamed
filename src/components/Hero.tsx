@@ -1,8 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Stethoscope } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import heroImage from "@/assets/hero-doctor.jpg";
 
 export const Hero = () => {
+  const navigate = useNavigate();
+  
   return (
     <section className="relative min-h-screen flex items-center pt-20">
       <div className="absolute inset-0 bg-gradient-to-br from-primary-glow/20 via-background to-background" />
@@ -33,7 +36,11 @@ export const Hero = () => {
                 Join the Waitlist
                 <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Button>
-              <Button variant="outline" size="lg">
+              <Button 
+                variant="outline" 
+                size="lg"
+                onClick={() => navigate('/learn-more')}
+              >
                 Learn More
               </Button>
             </div>
