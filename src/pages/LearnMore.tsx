@@ -1,7 +1,7 @@
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, CheckCircle, Users, Shield, Clock } from "lucide-react";
+import { ArrowRight, CheckCircle, Users, Shield, Clock, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const LearnMore = () => {
@@ -13,6 +13,17 @@ const LearnMore = () => {
       
       <main className="pt-24 pb-16">
         <div className="container mx-auto px-4">
+          {/* Back Button */}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => navigate('/')}
+            className="mb-8"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back
+          </Button>
+          
           {/* Hero Section */}
           <section className="max-w-4xl mx-auto text-center mb-20">
             <h1 className="text-4xl lg:text-6xl font-bold mb-6">
