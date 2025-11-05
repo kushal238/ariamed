@@ -27,24 +27,15 @@ export const Hero = () => {
               Connect doctors and patients through secure digital prescriptions. No more lost records. Complete medical history at your fingertips.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button 
-                variant="hero" 
-                size="lg" 
-                className="group"
-                onClick={() => window.open('https://forms.gle/ZHETRTEAm72hZv366', '_blank')}
-              >
-                Join the Waitlist
-                <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-              </Button>
             <Button 
-              variant="outline" 
-              size="lg"
-              onClick={() => scrollToSection('benefits')}
+              variant="hero" 
+              size="lg" 
+              className="group w-fit"
+              onClick={() => window.open('https://forms.gle/ZHETRTEAm72hZv366', '_blank')}
             >
-              Learn More
+              Join the Waitlist
+              <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
             </Button>
-            </div>
             
             <div className="flex items-center gap-8 pt-8 border-t border-border">
               <div>
