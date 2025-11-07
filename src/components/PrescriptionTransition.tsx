@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import prescriptionImage from "@/assets/prescription-paper.jpg";
+import digitalPrescriptionImage from "@/assets/digital-prescription.jpg";
 import iphoneImage from "@/assets/iphone-mockup.png";
 
 export const PrescriptionTransition = () => {
@@ -97,15 +98,15 @@ export const PrescriptionTransition = () => {
                   alt="iPhone mockup"
                   className="w-full h-auto"
                 />
-                {/* Prescription inside phone screen */}
+                {/* Digital prescription inside phone screen */}
                 <div 
-                  className="absolute top-[12%] left-[10%] right-[10%] bottom-[12%] overflow-hidden rounded-[2rem]"
+                  className="absolute top-[12%] left-[10%] right-[10%] bottom-[12%] overflow-hidden rounded-[2rem] bg-white"
                   style={{ opacity: prescriptionInPhoneOpacity }}
                 >
                   <img 
-                    src={prescriptionImage} 
+                    src={digitalPrescriptionImage} 
                     alt="Digital prescription"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain"
                   />
                 </div>
               </div>
