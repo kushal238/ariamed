@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Stethoscope } from "lucide-react";
-import heroImage from "@/assets/hero-doctor.jpg";
+import ariaLogo from "@/assets/aria-logo.svg";
 
 export const Hero = () => {
   const scrollToSection = (id: string) => {
@@ -53,12 +53,12 @@ export const Hero = () => {
             </div>
           </div>
           
-          <div className="relative lg:block hidden">
-            <div className="absolute inset-0 bg-gradient-hero opacity-20 blur-3xl rounded-full" />
+          <div className="relative lg:flex hidden items-center justify-center">
+            <div className="absolute inset-0 bg-gradient-hero opacity-20 blur-3xl" />
             <img 
-              src={heroImage} 
-              alt="Modern healthcare with digital prescriptions" 
-              className="relative rounded-2xl shadow-medium w-full h-auto"
+              src={ariaLogo} 
+              alt="Aria - Digital Healthcare Platform" 
+              className="relative w-[500px] h-auto drop-shadow-2xl"
             />
           </div>
         </div>
