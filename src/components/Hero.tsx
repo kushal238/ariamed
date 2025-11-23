@@ -58,7 +58,7 @@ export const Hero = () => {
             <img 
               src={ariaLogo} 
               alt="Aria - Digital Healthcare Platform" 
-              className="relative w-[500px] h-auto drop-shadow-2xl"
+              className="relative w-[500px] h-auto drop-shadow-2xl opacity-60"
             />
           </div>
         </div>
