@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Stethoscope } from "lucide-react";
-import ariaLogo from "@/assets/aria-logo.svg";
+import ariaLogo from "@/assets/aria-logo-new.svg";
 
 export const Hero = () => {
   const scrollToSection = (id: string) => {

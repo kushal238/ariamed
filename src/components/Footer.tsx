@@ -1,4 +1,4 @@
-import ariaLogo from "@/assets/aria-logo.svg";
+import ariaLogo from "@/assets/aria-logo-new.svg";
 
 export const Footer = () => {
   return (
