@@ -197,9 +197,9 @@ const Waitlist = () => {
                     </div>
                     {[
                       { id: "appointment", label: "Appointment scheduling/management" },
-                      { id: "messaging", label: "Secure messaging with healthcare providers" },
+                      { id: "appointment", label: "ABHA-integration" },
+                      { id: "messaging", label: "Secure messaging with patients/healthcare providers" },
                       { id: "records", label: "Access to medical records/results" },
-                      { id: "refills", label: "Prescription refill requests" },
                       { id: "telehealth", label: "Telehealth/virtual consultations" },
                     ].map((item) => (
                       <FormField
