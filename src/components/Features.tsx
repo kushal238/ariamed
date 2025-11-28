@@ -1,5 +1,6 @@
 import { Users, Pill, FileText, Brain } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { motion } from "framer-motion";
 
 const features = [
   {
@@ -45,29 +46,49 @@ export const Features = () => {
           </p>
         </div>
         
-        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <motion.div 
+          className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.2 }}
+          variants={{
+            visible: {
+              transition: {
+                staggerChildren: 0.15
+              }
+            }
+          }}
+        >
           {features.map((feature, index) => {
             const Icon = feature.icon;
             return (
-              <Card 
-                key={index} 
-                className="bg-gradient-card border-border shadow-soft hover:shadow-medium transition-all duration-300"
+              <motion.div
+                key={index}
+                variants={{
+                  hidden: { opacity: 0, y: 50 },
+                  visible: { opacity: 1, y: 0 }
+                }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
               >
-                <CardHeader>
-                  <div className={`h-14 w-14 rounded-xl ${feature.bg} flex items-center justify-center mb-4`}>
-                    <Icon className={`h-7 w-7 ${feature.color}`} />
-                  </div>
-                  <CardTitle className="text-2xl">{feature.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="text-base leading-relaxed">
-                    {feature.description}
-                  </CardDescription>
-                </CardContent>
-              </Card>
+                <Card 
+                  className="bg-gradient-card border-border shadow-soft hover:shadow-medium transition-all duration-300 h-full"
+                >
+                  <CardHeader>
+                    <div className={`h-14 w-14 rounded-xl ${feature.bg} flex items-center justify-center mb-4`}>
+                      <Icon className={`h-7 w-7 ${feature.color}`} />
+                    </div>
+                    <CardTitle className="text-2xl">{feature.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <CardDescription className="text-base leading-relaxed">
+                      {feature.description}
+                    </CardDescription>
+                  </CardContent>
+                </Card>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
