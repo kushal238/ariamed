@@ -199,7 +199,7 @@ const Waitlist = () => {
                       { id: "appointment", label: "Appointment scheduling/management" },
                       { id: "ABHA", label: "ABHA-integration" },
                       { id: "messaging", label: "Secure messaging with patients/healthcare providers" },
-                      { id: "records", label: "Access to medical records/results" },
+                      { id: "records", label: "Access to medical records" },
                       { id: "telehealth", label: "Telehealth/virtual consultations" },
                     ].map((item) => (
                       <FormField
@@ -263,12 +263,7 @@ const Waitlist = () => {
                           </FormControl>
                           <FormLabel className="font-normal">Social Media</FormLabel>
                         </FormItem>
-                        <FormItem className="flex items-center space-x-3 space-y-0">
-                          <FormControl>
-                            <RadioGroupItem value="recommendation" />
-                          </FormControl>
-                          <FormLabel className="font-normal">Recommendation from a Doctor/Healthcare Provider</FormLabel>
-                        </FormItem>
+
                          <FormItem className="flex items-center space-x-3 space-y-0">
                           <FormControl>
                             <RadioGroupItem value="word_of_mouth" />
