@@ -18,7 +18,7 @@ export const CTA = () => {
               Ready to Transform Healthcare?
             </h2>
             <p className="text-xl text-primary-foreground/90 leading-relaxed">
-              Connect with us to learn how Aria can transform your practice or healthcare experience.
+              Connect with us!
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
