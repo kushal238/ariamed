@@ -197,7 +197,7 @@ const Waitlist = () => {
                     </div>
                     {[
                       { id: "appointment", label: "Appointment scheduling/management" },
-                      { id: "appointment", label: "ABHA-integration" },
+                      { id: "ABHA", label: "ABHA-integration" },
                       { id: "messaging", label: "Secure messaging with patients/healthcare providers" },
                       { id: "records", label: "Access to medical records/results" },
                       { id: "telehealth", label: "Telehealth/virtual consultations" },
