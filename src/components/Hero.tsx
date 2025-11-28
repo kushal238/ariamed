@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Stethoscope } from "lucide-react";
 import ariaLogo from "@/assets/aria-logo-new.svg";
+import { useNavigate } from "react-router-dom";
 
 export const Hero = () => {
+  const navigate = useNavigate();
   const scrollToSection = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -31,7 +33,7 @@ export const Hero = () => {
               variant="hero" 
               size="lg" 
               className="group w-fit"
-              onClick={() => window.open('https://forms.gle/ZHETRTEAm72hZv366', '_blank')}
+              onClick={() => navigate('/waitlist')}
             >
               Join the Waitlist
               <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
