@@ -22,7 +22,9 @@ export const Hero = () => {
             </div>
             
             <h1 className="text-5xl lg:text-7xl font-bold leading-tight">
-              Digital <span className="bg-gradient-hero bg-clip-text text-transparent">Prescriptions</span> for Modern India
+              The Future of <br />
+              <span className="bg-gradient-hero bg-clip-text text-transparent">Medical Records</span> <br />
+              Starts Here
             </h1>
             
             <p className="text-xl text-muted-foreground leading-relaxed max-w-xl">
