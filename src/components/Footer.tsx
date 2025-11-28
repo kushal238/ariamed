@@ -19,7 +19,7 @@ export const Footer = () => {
           
           <div className="text-center md:text-left">
             <p className="text-muted-foreground">
-              Transforming healthcare in India, one digital prescription at a time.
+              Transforming healthcare in India, one prescription at a time.
             </p>
           </div>
           

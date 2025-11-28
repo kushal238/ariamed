@@ -26,18 +26,18 @@ export const Hero = () => {
             </h1>
             
             <p className="text-xl text-muted-foreground leading-relaxed max-w-xl">
-              Connect doctors and patients through secure digital prescriptions. No more lost records. Complete medical history at your fingertips.
+            ABHA-integrated digital prescriptions that empower doctors and patients with complete medical history visibility.
             </p>
             
-            <Button 
-              variant="hero" 
-              size="lg" 
-              className="group w-fit"
-              onClick={() => navigate('/waitlist')}
+            <a 
+              href="https://abha.abdm.gov.in/abha/v3/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-base font-medium text-primary hover:text-primary/80 transition-colors mb-8 group"
             >
-              Join the Waitlist
-              <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-            </Button>
+              Learn more about ABHA
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </a>
             
             <div className="flex items-center gap-8 pt-8 border-t border-border">
               <div>

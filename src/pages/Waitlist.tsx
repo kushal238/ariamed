@@ -101,9 +101,6 @@ const Waitlist = () => {
       <div className="flex-1 container mx-auto px-4 py-32 max-w-2xl">
         <div className="space-y-6 text-center mb-10">
           <h1 className="text-4xl font-bold tracking-tight">Join the Waitlist</h1>
-          <p className="text-xl text-muted-foreground">
-            Be the first to experience the future of healthcare in India.
-          </p>
         </div>
 
         <div className="bg-card p-8 rounded-xl shadow-sm border border-border">
