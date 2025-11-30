@@ -20,7 +20,10 @@ export const Navbar = () => {
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <div 
           className="text-2xl font-bold bg-gradient-hero bg-clip-text text-transparent cursor-pointer"
-          onClick={() => navigate('/')}
+          onClick={() => {
+            navigate('/');
+            window.scrollTo(0, 0);
+          }}
         >
           Aria
         </div>
