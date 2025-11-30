@@ -1,4 +1,5 @@
 import ariaLogo from "@/assets/aria-logo-new.svg";
+import { Link } from "react-router-dom";
 
 export const Footer = () => {
   return (
@@ -23,8 +24,13 @@ export const Footer = () => {
             </p>
           </div>
           
-          <div className="text-muted-foreground text-sm">
-            © 2025 Aria. All rights reserved.
+          <div className="flex flex-col items-center md:items-end gap-2">
+            <div className="text-muted-foreground text-sm">
+              © 2025 Aria. All rights reserved.
+            </div>
+            <Link to="/privacy" className="text-xs text-muted-foreground hover:text-primary transition-colors">
+              Privacy Policy
+            </Link>
           </div>
         </div>
       </div>
