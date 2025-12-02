@@ -4,12 +4,28 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/comp
 import { Input } from "@/components/ui/input";
 import { useFormContext } from "react-hook-form";
 import { customList } from "country-codes-list";
+import { useMemo } from "react";
 
 const countryCodes = customList("countryCode", "{countryCode} +{countryCallingCode}");
 
+// Memoize the country list items to prevent re-rendering on every keystroke
+const countryOptions = Object.entries(countryCodes).map(([code, label]) => ({
+  code,
+  label,
+}));
+
 export function PhoneInput({ control, name }: { control: any, name: string }) {
-  const { setValue, watch } = useFormContext();
+  const { watch } = useFormContext();
   const countryCode = watch(`${name}CountryCode`) || "IN";
+  
+  // Memoize the rendered SelectItems to prevent re-creation on every render
+  const countryItems = useMemo(() => {
+    return countryOptions.map(({ code, label }) => (
+      <SelectItem key={code} value={code}>
+        {label}
+      </SelectItem>
+    ));
+  }, []);
   
   return (
     <FormItem>
@@ -30,11 +46,7 @@ export function PhoneInput({ control, name }: { control: any, name: string }) {
                       <SelectValue placeholder="Code" />
                     </SelectTrigger>
                     <SelectContent>
-                      {Object.entries(countryCodes).map(([code, label]) => (
-                        <SelectItem key={code} value={code}>
-                          {label}
-                        </SelectItem>
-                      ))}
+                      {countryItems}
                     </SelectContent>
                   </Select>
                 </FormControl>

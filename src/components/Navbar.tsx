@@ -7,32 +7,41 @@ export const Navbar = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    let ticking = false;
+    
     const handleScroll = () => {
-      setShowButton(window.scrollY > 400);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setShowButton(window.scrollY > 400);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-      <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <div 
-          className="text-2xl font-bold bg-gradient-hero bg-clip-text text-transparent cursor-pointer"
+    <nav className="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-sm border-b border-border/40 transition-all duration-300" style={{ willChange: 'transform', transform: 'translateZ(0)' }}>
+      <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+        <div
+          className="flex items-center gap-3 cursor-pointer"
           onClick={() => {
             navigate('/');
             window.scrollTo(0, 0);
           }}
         >
-          Aria
+          <span className="text-2xl font-bold text-primary">
+            Aria
+          </span>
         </div>
-        
-        <Button 
-          variant="hero" 
-          className={`transition-all duration-300 ${
-            showButton ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8 pointer-events-none'
-          }`}
+
+        <Button
+          variant="default"
+          className={`transition-all duration-300 bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20 ${showButton ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8 pointer-events-none'
+            }`}
           onClick={() => navigate('/waitlist')}
         >
           Join the Waitlist
