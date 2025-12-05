@@ -54,4 +54,4 @@ This project is built with a modern frontend stack:
 
 ## Deployment
 
-The project is configured for easy deployment on Vercel, Netlify, or any static site host. Ensure environment variables are set in your deployment dashboard.
+The project is configured for easy deployment on Vercel, Netlify, or any static site host. Ensure environment variables are set in your deployment dashboard
