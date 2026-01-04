@@ -1,15 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Stethoscope } from "lucide-react";
 import ariaLogo from "@/assets/aria-logo-final.svg";
-import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
 export const Hero = () => {
-  const navigate = useNavigate();
-  const scrollToSection = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   return (
     <section className="relative min-h-screen flex items-center pt-20 overflow-hidden bg-gradient-to-b from-secondary/50 to-background">
       <div className="absolute inset-0 bg-gradient-to-br from-primary-glow/20 via-background to-background" />
@@ -29,7 +23,7 @@ export const Hero = () => {
 
             <h1 className="text-5xl lg:text-7xl font-bold leading-tight tracking-tight">
               The Future of <br />
-              <span className="bg-gradient-hero bg-clip-text text-transparent">Medical Records</span> <br />
+              <span className="text-primary">Medical Records</span> <br />
               Starts Here
             </h1>
 
