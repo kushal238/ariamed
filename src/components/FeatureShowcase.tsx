@@ -114,26 +114,26 @@ const SmartDictationDemo = () => {
   };
 
   return (
-    <div className="w-full h-full flex items-center justify-center p-8">
-      <Card className="w-full max-w-2xl p-8 border-2">
-        <div className="flex items-center gap-4 mb-6">
+    <div className="w-full h-full flex items-center justify-center p-4 md:p-8">
+      <Card className="w-full max-w-full md:max-w-2xl p-4 md:p-8 border-2">
+        <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
           <motion.div
             animate={{ scale: [1, 1.1, 1] }}
             transition={{ repeat: Infinity, duration: 2 }}
-            className="w-12 h-12 rounded-lg bg-red-500 flex items-center justify-center shadow-md"
+            className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-red-500 flex items-center justify-center shadow-md flex-shrink-0"
           >
-            <Mic className="w-6 h-6 text-white" />
+            <Mic className="w-5 h-5 md:w-6 md:h-6 text-white" />
           </motion.div>
-          <div>
-            <h3 className="font-bold text-xl">Medical Voice Dictation</h3>
-            <p className="text-sm text-muted-foreground">
+          <div className="min-w-0 flex-1">
+            <h3 className="font-bold text-lg md:text-xl">Medical Voice Dictation</h3>
+            <p className="text-xs md:text-sm text-muted-foreground">
               Real-time prescription writing
             </p>
           </div>
         </div>
 
-        <div className="bg-muted/30 rounded-xl p-6 min-h-[200px] border border-border">
-          <p className="text-foreground leading-relaxed text-base">
+        <div className="bg-muted/30 rounded-xl p-4 md:p-6 min-h-[180px] md:min-h-[200px] border border-border">
+          <p className="text-foreground leading-relaxed text-sm md:text-base">
             {renderHighlightedText(text)}
             <motion.span
               animate={{ opacity: [1, 0] }}
@@ -149,9 +149,9 @@ const SmartDictationDemo = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="mt-6 flex gap-2 flex-wrap items-center"
+            className="mt-4 md:mt-6 flex gap-2 flex-wrap items-center"
           >
-            <span className="text-sm font-medium text-muted-foreground">Detected:</span>
+            <span className="text-xs md:text-sm font-medium text-muted-foreground">Detected:</span>
             {highlights.map((h, idx) => (
               <Badge
                 key={idx}
@@ -266,22 +266,22 @@ const SmartMedicationSearchDemo = () => {
     : crocinOptions;
 
   return (
-    <div className="w-full h-full flex items-center justify-center p-8">
-      <Card className="w-full max-w-2xl p-8 border-2">
-        <div className="flex items-center gap-4 mb-6">
-          <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-primary to-blue-400 flex items-center justify-center shadow-md">
-            <Sparkles className="w-6 h-6 text-white" />
+    <div className="w-full h-full flex items-center justify-center p-4 md:p-8">
+      <Card className="w-full max-w-full md:max-w-2xl p-4 md:p-8 border-2">
+        <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
+          <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-gradient-to-br from-primary to-blue-400 flex items-center justify-center shadow-md flex-shrink-0">
+            <Sparkles className="w-5 h-5 md:w-6 md:h-6 text-white" />
           </div>
-          <div>
-            <h3 className="font-bold text-xl">Smart Medication Search</h3>
-            <p className="text-sm text-muted-foreground">
+          <div className="min-w-0 flex-1">
+            <h3 className="font-bold text-lg md:text-xl">Smart Medication Search</h3>
+            <p className="text-xs md:text-sm text-muted-foreground">
               Instant medication lookup with dosage options
             </p>
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-blue-50 to-cyan-50 border-2 border-blue-200 rounded-xl p-6">
-          <label className="text-sm font-semibold text-foreground mb-3 block">
+        <div className="bg-gradient-to-br from-blue-50 to-cyan-50 border-2 border-blue-200 rounded-xl p-4 md:p-6">
+          <label className="text-xs md:text-sm font-semibold text-foreground mb-2 md:mb-3 block">
             Medication Name (type to search)
           </label>
           
@@ -292,7 +292,7 @@ const SmartMedicationSearchDemo = () => {
               value={medicationInput}
               readOnly
               placeholder="Start typing medication name..."
-              className="w-full px-4 py-3 border-2 border-border rounded-lg bg-white focus:outline-none focus:border-primary transition-colors text-base font-medium"
+              className="w-full px-3 md:px-4 py-2 md:py-3 border-2 border-border rounded-lg bg-white focus:outline-none focus:border-primary transition-colors text-sm md:text-base font-medium"
             />
             
             {/* Typing cursor */}
@@ -300,13 +300,13 @@ const SmartMedicationSearchDemo = () => {
               <motion.div
                 animate={{ opacity: [1, 0] }}
                 transition={{ repeat: Infinity, duration: 0.8 }}
-                className="absolute right-4 top-1/2 -translate-y-1/2 w-0.5 h-5 bg-primary"
+                className="absolute right-3 md:right-4 top-1/2 -translate-y-1/2 w-0.5 h-4 md:h-5 bg-primary"
               />
             )}
           </div>
           
           {/* Fixed height container for dropdown and selection */}
-          <div className="relative min-h-[280px]">
+          <div className="relative min-h-[240px] md:min-h-[280px]">
             {/* Dropdown */}
             <AnimatePresence>
               {showDropdown && (
@@ -317,7 +317,7 @@ const SmartMedicationSearchDemo = () => {
                   transition={{ duration: 0.2 }}
                   className="bg-white border-2 border-blue-200 rounded-lg shadow-xl overflow-hidden"
                 >
-                  <div className="px-3 py-2 bg-blue-50 border-b border-blue-200">
+                  <div className="px-2 md:px-3 py-2 bg-blue-50 border-b border-blue-200">
                     <p className="text-xs font-semibold text-muted-foreground">
                       {displayOptions.length} medications found
                     </p>
@@ -328,12 +328,12 @@ const SmartMedicationSearchDemo = () => {
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: idx * 0.08 }}
-                      className={`px-4 py-3 hover:bg-blue-50 cursor-pointer transition-colors border-b border-border last:border-b-0 ${
+                      className={`px-3 md:px-4 py-2 md:py-3 hover:bg-blue-50 cursor-pointer transition-colors border-b border-border last:border-b-0 ${
                         idx === 0 ? 'bg-blue-50/50 border-l-4 border-l-primary' : ''
                       }`}
                     >
                       <div className="flex items-center justify-between mb-1">
-                        <span className="font-semibold text-base">{med.name}</span>
+                        <span className="font-semibold text-sm md:text-base">{med.name}</span>
                         <Badge variant="outline" className="text-xs font-medium">
                           {med.dosage}
                         </Badge>
@@ -352,11 +352,11 @@ const SmartMedicationSearchDemo = () => {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  className="flex items-start gap-3 bg-green-50 border-2 border-green-200 rounded-lg p-4"
+                  className="flex items-start gap-2 md:gap-3 bg-green-50 border-2 border-green-200 rounded-lg p-3 md:p-4"
                 >
-                  <CheckCircle2 className="w-5 h-5 text-green-600 mt-0.5" />
-                  <div className="flex-1">
-                    <p className="font-semibold text-sm text-green-900">
+                  <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <p className="font-semibold text-xs md:text-sm text-green-900">
                       Selected: {selectedMedication}
                     </p>
                     <p className="text-xs text-green-700 mt-1">
@@ -450,52 +450,52 @@ const AggregatedHistoryDemo = () => {
   }, []);
 
   return (
-    <div className="w-full h-full flex items-center justify-center p-8">
-      <Card className="w-full max-w-2xl p-8 border-2">
-        <div className="flex items-center gap-4 mb-6">
-          <div className="w-12 h-12 rounded-lg bg-blue-500 flex items-center justify-center shadow-md">
-            <History className="w-6 h-6 text-white" />
+    <div className="w-full h-full flex items-center justify-center p-4 md:p-8">
+      <Card className="w-full max-w-full md:max-w-2xl p-4 md:p-8 border-2">
+        <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
+          <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-blue-500 flex items-center justify-center shadow-md flex-shrink-0">
+            <History className="w-5 h-5 md:w-6 md:h-6 text-white" />
           </div>
-          <div>
-            <h3 className="font-bold text-xl">Complete Patient Timeline</h3>
-            <p className="text-sm text-muted-foreground">
+          <div className="min-w-0 flex-1">
+            <h3 className="font-bold text-lg md:text-xl">Complete Patient Timeline</h3>
+            <p className="text-xs md:text-sm text-muted-foreground">
               All medical records in one view
             </p>
           </div>
         </div>
 
         {/* Patient Info Card */}
-        <div className="bg-gradient-to-br from-blue-50 to-cyan-50 border-2 border-blue-200 rounded-xl p-5 mb-6">
+        <div className="bg-gradient-to-br from-blue-50 to-cyan-50 border-2 border-blue-200 rounded-xl p-4 md:p-5 mb-4 md:mb-6">
           <div className="flex items-start justify-between mb-3">
-            <div>
-              <h4 className="font-bold text-lg">Sarah Johnson</h4>
-              <p className="text-sm text-muted-foreground">Female, 42 years • ID: #MR-4521</p>
+            <div className="min-w-0 flex-1 mr-2">
+              <h4 className="font-bold text-base md:text-lg">Sarah Johnson</h4>
+              <p className="text-xs md:text-sm text-muted-foreground">Female, 42 years • ID: #MR-4521</p>
             </div>
-            <Badge variant="outline" className="font-medium">Active Patient</Badge>
+            <Badge variant="outline" className="text-xs font-medium flex-shrink-0">Active Patient</Badge>
           </div>
           
-          <div className="grid grid-cols-3 gap-3 text-sm">
-            <div className="bg-white/60 rounded-lg p-3 border border-blue-100">
-              <p className="text-muted-foreground font-medium mb-1">Conditions</p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 md:gap-3 text-xs md:text-sm">
+            <div className="bg-white/60 rounded-lg p-2 md:p-3 border border-blue-100">
+              <p className="text-muted-foreground font-medium mb-1 text-xs">Conditions</p>
               <p className="font-semibold text-xs">Hypertension</p>
             </div>
-            <div className="bg-white/60 rounded-lg p-3 border border-blue-100">
-              <p className="text-muted-foreground font-medium mb-1">Allergies</p>
+            <div className="bg-white/60 rounded-lg p-2 md:p-3 border border-blue-100">
+              <p className="text-muted-foreground font-medium mb-1 text-xs">Allergies</p>
               <p className="font-semibold text-xs">Penicillin</p>
             </div>
-            <div className="bg-white/60 rounded-lg p-3 border border-blue-100">
-              <p className="text-muted-foreground font-medium mb-1">Active Meds</p>
+            <div className="bg-white/60 rounded-lg p-2 md:p-3 border border-blue-100">
+              <p className="text-muted-foreground font-medium mb-1 text-xs">Active Meds</p>
               <p className="font-semibold text-xs">Lisinopril 10mg</p>
             </div>
           </div>
         </div>
 
-        <div className="relative bg-muted/30 rounded-xl p-6 border border-border">
+        <div className="relative bg-muted/30 rounded-xl p-4 md:p-6 border border-border">
           {/* Timeline line */}
-          <div className="absolute left-10 top-6 bottom-6 w-0.5 bg-gradient-to-b from-blue-200 via-blue-400 to-blue-200" />
+          <div className="absolute left-8 md:left-10 top-6 bottom-6 w-0.5 bg-gradient-to-b from-blue-200 via-blue-400 to-blue-200" />
 
           {/* Timeline items */}
-          <div className="space-y-6">
+          <div className="space-y-4 md:space-y-6">
             <AnimatePresence>
               {items.map((item, idx) => {
                 const isExpanded = expandedId === item.id;
@@ -506,14 +506,14 @@ const AggregatedHistoryDemo = () => {
                     initial={{ x: -100, opacity: 0, scale: 0.8 }}
                     animate={{ x: 0, opacity: 1, scale: 1 }}
                     transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                    className="relative flex items-start gap-4"
+                    className="relative flex items-start gap-3 md:gap-4"
                   >
                     {/* Timeline dot */}
                     <motion.div
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       transition={{ delay: 0.2 }}
-                      className="w-3 h-3 rounded-full bg-blue-500 border-2 border-white shadow-lg z-10"
+                      className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-blue-500 border-2 border-white shadow-lg z-10 flex-shrink-0 mt-1"
                     />
 
                     {/* Card */}
@@ -523,16 +523,16 @@ const AggregatedHistoryDemo = () => {
                         y: 0,
                         scale: isExpanded ? 1.02 : 1
                       }}
-                      className={`flex-1 bg-card border rounded-xl p-4 shadow-sm hover:shadow-md transition-all ${
+                      className={`flex-1 bg-card border rounded-lg md:rounded-xl p-3 md:p-4 shadow-sm hover:shadow-md transition-all ${
                         isExpanded ? 'border-primary border-2' : 'border-border'
                       }`}
                     >
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <FileText className="w-5 h-5 text-muted-foreground" />
-                          <span className="font-semibold text-base">{item.type}</span>
+                        <div className="flex items-center gap-2 md:gap-3 min-w-0 flex-1">
+                          <FileText className="w-4 h-4 md:w-5 md:h-5 text-muted-foreground flex-shrink-0" />
+                          <span className="font-semibold text-sm md:text-base truncate">{item.type}</span>
                         </div>
-                        <span className="text-sm text-muted-foreground font-medium">{item.date}</span>
+                        <span className="text-xs md:text-sm text-muted-foreground font-medium flex-shrink-0 ml-2">{item.date}</span>
                       </div>
                       
                       {/* Expanded content for Prescription */}
@@ -545,30 +545,30 @@ const AggregatedHistoryDemo = () => {
                             transition={{ duration: 0.3 }}
                             className="overflow-hidden"
                           >
-                            <div className="mt-4 pt-4 border-t border-border space-y-4">
+                            <div className="mt-3 md:mt-4 pt-3 md:pt-4 border-t border-border space-y-3 md:space-y-4">
                               {/* Diagnosis Section */}
-                              <div className="bg-blue-50/50 rounded-lg p-3 border border-blue-100">
+                              <div className="bg-blue-50/50 rounded-lg p-2.5 md:p-3 border border-blue-100">
                                 <p className="text-xs font-medium text-blue-900 mb-1">Diagnosis</p>
-                                <p className="font-semibold text-sm text-foreground">Acute Upper Respiratory Infection</p>
+                                <p className="font-semibold text-xs md:text-sm text-foreground">Acute Upper Respiratory Infection</p>
                                 <p className="text-xs text-muted-foreground mt-1">
                                   Symptoms: Fever (99.8°F), cough, sore throat, nasal congestion
                                 </p>
                               </div>
                               
                               {/* Medications Section */}
-                              <div className="space-y-3">
+                              <div className="space-y-2 md:space-y-3">
                                 <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Prescribed Medications</p>
-                                <div className="flex items-start gap-3">
-                                  <Pill className="w-4 h-4 text-primary mt-1" />
-                                  <div className="flex-1">
-                                    <p className="font-semibold text-sm">Paracetamol 500mg</p>
+                                <div className="flex items-start gap-2 md:gap-3">
+                                  <Pill className="w-3.5 h-3.5 md:w-4 md:h-4 text-primary mt-1 flex-shrink-0" />
+                                  <div className="flex-1 min-w-0">
+                                    <p className="font-semibold text-xs md:text-sm">Paracetamol 500mg</p>
                                     <p className="text-xs text-muted-foreground">1 tablet, twice daily after meals</p>
                                   </div>
                                 </div>
-                                <div className="flex items-start gap-3">
-                                  <Pill className="w-4 h-4 text-primary mt-1" />
-                                  <div className="flex-1">
-                                    <p className="font-semibold text-sm">Cetirizine 10mg</p>
+                                <div className="flex items-start gap-2 md:gap-3">
+                                  <Pill className="w-3.5 h-3.5 md:w-4 md:h-4 text-primary mt-1 flex-shrink-0" />
+                                  <div className="flex-1 min-w-0">
+                                    <p className="font-semibold text-xs md:text-sm">Cetirizine 10mg</p>
                                     <p className="text-xs text-muted-foreground">1 tablet, once daily before bedtime</p>
                                   </div>
                                 </div>
@@ -661,36 +661,36 @@ const ComplaintBasedDiagnosisDemo = () => {
   }, []);
 
   return (
-    <div className="w-full h-full flex items-center justify-center p-8">
-      <Card className="w-full max-w-2xl p-8 border-2">
-        <div className="flex items-center gap-4 mb-6">
-          <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center shadow-md">
-            <Brain className="w-6 h-6 text-white" />
+    <div className="w-full h-full flex items-center justify-center p-4 md:p-8">
+      <Card className="w-full max-w-full md:max-w-2xl p-4 md:p-8 border-2">
+        <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
+          <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center shadow-md flex-shrink-0">
+            <Brain className="w-5 h-5 md:w-6 md:h-6 text-white" />
           </div>
-          <div>
-            <h3 className="font-bold text-xl">AI-Aided Diagnosis</h3>
-            <p className="text-sm text-muted-foreground">
+          <div className="min-w-0 flex-1">
+            <h3 className="font-bold text-lg md:text-xl">AI-Aided Diagnosis</h3>
+            <p className="text-xs md:text-sm text-muted-foreground">
               Intelligent diagnosis based on complaints + patient history
             </p>
           </div>
         </div>
 
         {/* Patient Info */}
-        <div className="bg-gradient-to-br from-slate-50 to-blue-50 border border-border rounded-lg p-4 mb-4">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold">
+        <div className="bg-gradient-to-br from-slate-50 to-blue-50 border border-border rounded-lg p-3 md:p-4 mb-3 md:mb-4">
+          <div className="flex items-center gap-2 md:gap-3">
+            <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
               SJ
             </div>
-            <div>
-              <p className="font-semibold text-sm">Sarah Johnson</p>
+            <div className="min-w-0 flex-1">
+              <p className="font-semibold text-xs md:text-sm">Sarah Johnson</p>
               <p className="text-xs text-muted-foreground">Age: 34 • Last Visit: Dec 15, 2025</p>
             </div>
           </div>
         </div>
 
         {/* Complaints Input */}
-        <div className="bg-gradient-to-br from-blue-50 to-cyan-50 border-2 border-blue-200 rounded-xl p-6 mb-4">
-          <label className="text-sm font-semibold text-foreground mb-3 block">
+        <div className="bg-gradient-to-br from-blue-50 to-cyan-50 border-2 border-blue-200 rounded-xl p-4 md:p-6 mb-3 md:mb-4">
+          <label className="text-xs md:text-sm font-semibold text-foreground mb-2 md:mb-3 block">
             Chief Complaints
           </label>
           <div className="relative">
@@ -698,13 +698,13 @@ const ComplaintBasedDiagnosisDemo = () => {
               value={complaints}
               readOnly
               placeholder="Enter patient complaints..."
-              className="w-full px-4 py-3 border-2 border-border rounded-lg bg-white focus:outline-none focus:border-primary transition-colors text-sm min-h-[80px] resize-none"
+              className="w-full px-3 md:px-4 py-2 md:py-3 border-2 border-border rounded-lg bg-white focus:outline-none focus:border-primary transition-colors text-xs md:text-sm min-h-[70px] md:min-h-[80px] resize-none"
             />
             {complaints && complaints.length < fullComplaintsText.length && (
               <motion.div
                 animate={{ opacity: [1, 0] }}
                 transition={{ repeat: Infinity, duration: 0.8 }}
-                className="absolute right-4 bottom-4 w-0.5 h-4 bg-primary"
+                className="absolute right-3 md:right-4 bottom-3 md:bottom-4 w-0.5 h-3 md:h-4 bg-primary"
               />
             )}
           </div>
@@ -717,17 +717,18 @@ const ComplaintBasedDiagnosisDemo = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              className="bg-gradient-to-r from-blue-50 to-cyan-50 border-2 border-blue-200 rounded-lg p-4 mb-4"
+              className="bg-gradient-to-r from-blue-50 to-cyan-50 border-2 border-blue-200 rounded-lg p-3 md:p-4 mb-3 md:mb-4"
             >
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 md:gap-3">
                 <motion.div
                   animate={{ rotate: 360 }}
                   transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+                  className="flex-shrink-0"
                 >
-                  <Brain className="w-5 h-5 text-primary" />
+                  <Brain className="w-4 h-4 md:w-5 md:h-5 text-primary" />
                 </motion.div>
-                <div className="flex-1">
-                  <p className="text-sm font-semibold text-foreground">Analyzing with Patient History...</p>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs md:text-sm font-semibold text-foreground">Analyzing with Patient History...</p>
                   <p className="text-xs text-muted-foreground">Cross-referencing symptoms with Sarah's medical records</p>
                 </div>
               </div>
@@ -742,11 +743,11 @@ const ComplaintBasedDiagnosisDemo = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              className="space-y-3"
+              className="space-y-2 md:space-y-3"
             >
-              <div className="flex items-center gap-2 mb-3">
-                <Sparkles className="w-4 h-4 text-primary" />
-                <p className="text-sm font-semibold text-foreground">AI Diagnosis Suggestions</p>
+              <div className="flex items-center gap-2 mb-2 md:mb-3">
+                <Sparkles className="w-3.5 h-3.5 md:w-4 md:h-4 text-primary flex-shrink-0" />
+                <p className="text-xs md:text-sm font-semibold text-foreground">AI Diagnosis Suggestions</p>
               </div>
               
               {diagnosisResults.map((result, idx) => (
@@ -755,11 +756,11 @@ const ComplaintBasedDiagnosisDemo = () => {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: idx * 0.2 }}
-                  className="border-l-4 border-green-500 bg-green-50/80 rounded-lg p-4"
+                  className="border-l-4 border-green-500 bg-green-50/80 rounded-lg p-3 md:p-4"
                 >
-                  <div className="flex items-start justify-between mb-2">
-                    <h5 className="font-bold text-sm">{result.diagnosis}</h5>
-                    <Badge variant="secondary" className="text-xs">
+                  <div className="flex items-start justify-between gap-2 mb-2">
+                    <h5 className="font-bold text-xs md:text-sm flex-1">{result.diagnosis}</h5>
+                    <Badge variant="secondary" className="text-xs flex-shrink-0">
                       {result.confidence}% confidence
                     </Badge>
                   </div>
@@ -859,23 +860,23 @@ const PatientRAGChatbotDemo = () => {
   }, []);
 
   return (
-    <div className="w-full h-full flex items-center justify-center p-8">
-      <Card className="w-full max-w-2xl p-8 border-2">
-        <div className="flex items-center gap-4 mb-6">
-          <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center shadow-md">
-            <Sparkles className="w-6 h-6 text-white" />
+    <div className="w-full h-full flex items-center justify-center p-4 md:p-8">
+      <Card className="w-full max-w-full md:max-w-2xl p-4 md:p-8 border-2">
+        <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
+          <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center shadow-md flex-shrink-0">
+            <Sparkles className="w-5 h-5 md:w-6 md:h-6 text-white" />
           </div>
-          <div>
-            <h3 className="font-bold text-xl">Patient Health Assistant</h3>
-            <p className="text-sm text-muted-foreground">
+          <div className="min-w-0 flex-1">
+            <h3 className="font-bold text-lg md:text-xl">Patient Health Assistant</h3>
+            <p className="text-xs md:text-sm text-muted-foreground">
               RAG-powered chatbot for instant patient information
             </p>
           </div>
         </div>
 
         {/* Chat Interface */}
-        <div className="bg-gradient-to-br from-slate-50 to-blue-50 border-2 border-border rounded-xl p-6 min-h-[400px]">
-          <div className="space-y-4">
+        <div className="bg-gradient-to-br from-slate-50 to-blue-50 border-2 border-border rounded-xl p-4 md:p-6 min-h-[350px] md:min-h-[400px]">
+          <div className="space-y-3 md:space-y-4">
             {/* Display sent messages */}
             {messages.map((msg, idx) => (
               <motion.div
@@ -885,13 +886,13 @@ const PatientRAGChatbotDemo = () => {
                 className={`flex ${msg.role === "doctor" ? "justify-end" : "justify-start"}`}
               >
                 <div
-                  className={`max-w-[85%] rounded-lg p-4 ${
+                  className={`max-w-[90%] md:max-w-[85%] rounded-lg p-3 md:p-4 ${
                     msg.role === "doctor"
                       ? "bg-primary text-white"
                       : "bg-white border border-border"
                   }`}
                 >
-                  <p className="text-sm leading-relaxed">{msg.text}</p>
+                  <p className="text-xs md:text-sm leading-relaxed">{msg.text}</p>
                 </div>
               </motion.div>
             ))}
@@ -905,22 +906,22 @@ const PatientRAGChatbotDemo = () => {
                   exit={{ opacity: 0, y: -10 }}
                   className="flex justify-start"
                 >
-                  <div className="bg-white border border-border rounded-lg p-4">
+                  <div className="bg-white border border-border rounded-lg p-3 md:p-4">
                     <div className="flex items-center gap-2">
                       <motion.div
                         animate={{ opacity: [0.3, 1, 0.3] }}
                         transition={{ repeat: Infinity, duration: 1.5 }}
-                        className="w-2 h-2 rounded-full bg-primary"
+                        className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-primary"
                       />
                       <motion.div
                         animate={{ opacity: [0.3, 1, 0.3] }}
                         transition={{ repeat: Infinity, duration: 1.5, delay: 0.2 }}
-                        className="w-2 h-2 rounded-full bg-primary"
+                        className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-primary"
                       />
                       <motion.div
                         animate={{ opacity: [0.3, 1, 0.3] }}
                         transition={{ repeat: Infinity, duration: 1.5, delay: 0.4 }}
-                        className="w-2 h-2 rounded-full bg-primary"
+                        className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-primary"
                       />
                     </div>
                   </div>
@@ -935,13 +936,13 @@ const PatientRAGChatbotDemo = () => {
                 animate={{ opacity: 1, y: 0 }}
                 className="flex justify-end"
               >
-                <div className="max-w-[85%] bg-primary text-white rounded-lg p-4">
-                  <p className="text-sm">
+                <div className="max-w-[90%] md:max-w-[85%] bg-primary text-white rounded-lg p-3 md:p-4">
+                  <p className="text-xs md:text-sm">
                     {currentTyping}
                     <motion.span
                       animate={{ opacity: [1, 0] }}
                       transition={{ repeat: Infinity, duration: 0.8 }}
-                      className="inline-block w-0.5 h-4 bg-white ml-1"
+                      className="inline-block w-0.5 h-3 md:h-4 bg-white ml-1"
                     />
                   </p>
                 </div>
