@@ -9,6 +9,7 @@ import Index from "./pages/Index";
 // Lazy load routes for code splitting - reduces initial bundle size
 const Waitlist = lazy(() => import("./pages/Waitlist"));
 const Privacy = lazy(() => import("./pages/Privacy"));
+const ShowcaseDemo = lazy(() => import("./pages/ShowcaseDemo"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -31,6 +32,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/waitlist" element={<Waitlist />} />
             <Route path="/privacy" element={<Privacy />} />
+            <Route path="/showcase" element={<ShowcaseDemo />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
