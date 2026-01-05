@@ -976,13 +976,56 @@ const features: Feature[] = [
 export const FeatureShowcase = () => {
   const [activeFeature, setActiveFeature] = useState(0);
   const [expandedMobile, setExpandedMobile] = useState<number | null>(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const featureRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const mobileCardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const ActiveDemoComponent = features[activeFeature].component;
 
   const handleMobileCardClick = (index: number) => {
-    setExpandedMobile(expandedMobile === index ? null : index);
+    // Prevent rapid clicks during transition
+    if (isTransitioning) return;
+
+    // Case 1: Clicking the same card - just collapse it
+    if (expandedMobile === index) {
+      setExpandedMobile(null);
+      return;
+    }
+
+    // Case 2: No card is expanded - expand immediately
+    if (expandedMobile === null) {
+      setExpandedMobile(index);
+      // Scroll into view after a brief delay for smooth UX
+      setTimeout(() => {
+        mobileCardRefs.current[index]?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        });
+      }, 50);
+      return;
+    }
+
+    // Case 3: Another card is expanded - collapse first, then expand
+    setIsTransitioning(true);
+    
+    // Step 1: Collapse current card
+    setExpandedMobile(null);
+    
+    // Step 2: Wait for collapse animation, scroll to new card position
+    setTimeout(() => {
+      // First scroll the card into view while collapsed
+      mobileCardRefs.current[index]?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+      
+      // Then expand it after a brief moment
+      setTimeout(() => {
+        setExpandedMobile(index);
+        setIsTransitioning(false);
+      }, 300); // Wait for scroll to mostly complete
+    }, 400); // 400ms matches the card collapse animation duration
   };
 
   return (
@@ -1031,13 +1074,14 @@ export const FeatureShowcase = () => {
             return (
               <motion.div
                 key={feature.id}
+                ref={(el) => (mobileCardRefs.current[index] = el)}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
               >
                 <Card
-                  className={`overflow-hidden transition-all duration-300 ${
+                  className={`overflow-hidden transition-all duration-[400ms] ${
                     isExpanded
                       ? "border-2 border-blue-500 shadow-2xl"
                       : "border border-gray-200"
@@ -1076,7 +1120,7 @@ export const FeatureShowcase = () => {
                       </div>
                       <motion.div
                         animate={{ rotate: isExpanded ? 180 : 0 }}
-                        transition={{ duration: 0.3 }}
+                        transition={{ duration: 0.4 }}
                         className="flex-shrink-0"
                       >
                         <ChevronRight
@@ -1095,7 +1139,7 @@ export const FeatureShowcase = () => {
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                        transition={{ duration: 0.4, ease: "easeInOut" }}
                         className="overflow-hidden"
                       >
                         <div className="border-t border-gray-200">
