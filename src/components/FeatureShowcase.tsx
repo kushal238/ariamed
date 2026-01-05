@@ -1009,7 +1009,7 @@ const features: Feature[] = [
 
 export const FeatureShowcase = () => {
   const [activeFeature, setActiveFeature] = useState(0);
-  const [expandedMobile, setExpandedMobile] = useState<number | null>(null);
+  const [expandedMobile, setExpandedMobile] = useState<number | null>(0);
   const featureRefs = useRef<(HTMLDivElement | null)[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
 

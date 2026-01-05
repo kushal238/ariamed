@@ -27,10 +27,10 @@ export const Solution = () => {
               ].map((item, index) => (
                 <li
                   key={index}
-                  className="flex items-start gap-3 p-3 rounded-xl hover:bg-muted/50 transition-colors group"
+                  className="flex items-start gap-3 p-3"
                 >
-                  <div className="mt-1 h-5 w-5 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors flex-shrink-0">
-                    <CheckCircle className="h-3 w-3 text-primary group-hover:text-white" />
+                  <div className="mt-1 h-5 w-5 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <CheckCircle className="h-3 w-3 text-primary" />
                   </div>
                   <span className="text-foreground/80 font-medium text-lg leading-relaxed">{item}</span>
                 </li>
@@ -57,10 +57,10 @@ export const Solution = () => {
               ].map((item, index) => (
                 <li
                   key={index}
-                  className="flex items-start gap-3 p-3 rounded-xl hover:bg-muted/50 transition-colors group"
+                  className="flex items-start gap-3 p-3"
                 >
-                  <div className="mt-1 h-5 w-5 rounded-full bg-accent/10 flex items-center justify-center group-hover:bg-accent group-hover:text-white transition-colors flex-shrink-0">
-                    <CheckCircle className="h-3 w-3 text-accent group-hover:text-white" />
+                  <div className="mt-1 h-5 w-5 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
+                    <CheckCircle className="h-3 w-3 text-accent" />
                   </div>
                   <span className="text-foreground/80 font-medium text-lg leading-relaxed">{item}</span>
                 </li>
