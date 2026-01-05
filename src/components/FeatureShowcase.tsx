@@ -587,42 +587,65 @@ const ComplaintBasedDiagnosisDemo = () => {
     let analyzeTimeout: NodeJS.Timeout | null = null;
     let diagnosisTimeout: NodeJS.Timeout | null = null;
     let resetTimeout: NodeJS.Timeout | null = null;
+    let loopTimeout: NodeJS.Timeout | null = null;
+    let isCleanedUp = false;
 
-    // Start typing complaints
-    typingTimeout = setTimeout(() => {
-      let typingIndex = 0;
-      const typingInterval = setInterval(() => {
-        if (typingIndex <= fullComplaintsText.length) {
-          setComplaints(fullComplaintsText.slice(0, typingIndex));
-          typingIndex++;
-        } else {
-          clearInterval(typingInterval);
-          
-          // Start analyzing
-          analyzeTimeout = setTimeout(() => {
-            setIsAnalyzing(true);
+    const runAnimation = () => {
+      if (isCleanedUp) return;
+
+      // Start typing complaints
+      typingTimeout = setTimeout(() => {
+        let typingIndex = 0;
+        const typingInterval = setInterval(() => {
+          if (isCleanedUp) {
+            clearInterval(typingInterval);
+            return;
+          }
+
+          if (typingIndex <= fullComplaintsText.length) {
+            setComplaints(fullComplaintsText.slice(0, typingIndex));
+            typingIndex++;
+          } else {
+            clearInterval(typingInterval);
             
-            // Show diagnosis after analyzing
-            diagnosisTimeout = setTimeout(() => {
-              setIsAnalyzing(false);
-              setShowDiagnosis(true);
+            // Start analyzing
+            analyzeTimeout = setTimeout(() => {
+              if (isCleanedUp) return;
+              setIsAnalyzing(true);
               
-              // Reset animation
-              resetTimeout = setTimeout(() => {
-                setComplaints("");
-                setShowDiagnosis(false);
-              }, 5000);
-            }, 2500);
-          }, 500);
-        }
-      }, 50);
-    }, 500);
+              // Show diagnosis after analyzing
+              diagnosisTimeout = setTimeout(() => {
+                if (isCleanedUp) return;
+                setIsAnalyzing(false);
+                setShowDiagnosis(true);
+                
+                // Stay visible for 4 seconds, then reset
+                resetTimeout = setTimeout(() => {
+                  if (isCleanedUp) return;
+                  setComplaints("");
+                  setShowDiagnosis(false);
+                  
+                  // Wait 1 second, then restart loop
+                  loopTimeout = setTimeout(() => {
+                    if (!isCleanedUp) runAnimation();
+                  }, 1000);
+                }, 7000); // Stay for 4 seconds
+              }, 2500); // Analyzing duration
+            }, 500); // Delay before analyzing
+          }
+        }, 50); // Typing speed
+      }, 500); // Initial delay
+    };
+
+    runAnimation();
 
     return () => {
+      isCleanedUp = true;
       if (typingTimeout) clearTimeout(typingTimeout);
       if (analyzeTimeout) clearTimeout(analyzeTimeout);
       if (diagnosisTimeout) clearTimeout(diagnosisTimeout);
       if (resetTimeout) clearTimeout(resetTimeout);
+      if (loopTimeout) clearTimeout(loopTimeout);
     };
   }, []);
 
