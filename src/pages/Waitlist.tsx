@@ -36,6 +36,7 @@ const formSchema = z.object({
   features: z.array(z.string()).refine((value) => value.length > 0, {
     message: "Please select at least one feature.",
   }),
+  featuresOther: z.string().optional(),
   source: z.enum(["search_engine", "social_media", "recommendation", "word_of_mouth", "other"], {
     required_error: "Please tell us how you heard about us.",
   }),
@@ -58,6 +59,7 @@ const Waitlist = () => {
       phoneNumberCountryCode: "IN",
       email: "",
       features: [],
+      featuresOther: "",
       source: undefined,
       sourceOther: "",
     },
@@ -80,6 +82,7 @@ const Waitlist = () => {
           phone_number: fullPhoneNumber,
           email: values.email,
           features: values.features,
+          features_other: values.featuresOther,
           source: values.source,
           source_other: values.sourceOther,
         });
@@ -201,6 +204,8 @@ const Waitlist = () => {
                       { id: "messaging", label: "Secure messaging with patients/healthcare providers" },
                       { id: "records", label: "Access to medical records" },
                       { id: "telehealth", label: "Telehealth/virtual consultations" },
+                      { id: "ai_features", label: "AI-powered features" },
+                      { id: "other", label: "Other" },
                     ].map((item) => (
                       <FormField
                         key={item.id}
@@ -234,6 +239,20 @@ const Waitlist = () => {
                         }}
                       />
                     ))}
+                    {form.watch("features")?.includes("other") && (
+                      <FormField
+                        control={form.control}
+                        name="featuresOther"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <Input placeholder="Please specify other features..." {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    )}
                     <FormMessage />
                   </FormItem>
                 )}
