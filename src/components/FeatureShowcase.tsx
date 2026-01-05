@@ -375,77 +375,54 @@ const SmartMedicationSearchDemo = () => {
 
 // Aggregated History Demo Component
 const AggregatedHistoryDemo = () => {
-  const [items, setItems] = useState<
-    { id: number; type: string; date: string; visible: boolean }[]
-  >([]);
+  // Static timeline items - always visible
+  const items = [
+    { id: 1, type: "Prescription", date: "Dec 15, 2025" },
+    { id: 2, type: "Lab Report", date: "Dec 10, 2025" },
+    { id: 3, type: "Lab Report", date: "Dec 5, 2025" },
+    { id: 4, type: "Prescription", date: "Nov 20, 2025" },
+    { id: 5, type: "Imaging", date: "Nov 15, 2025" },
+  ];
+
   const [expandedId, setExpandedId] = useState<number | null>(null);
 
+  // Animation: only expand/collapse the first prescription
   useEffect(() => {
-    const allItems = [
-      { id: 1, type: "Prescription", date: "Dec 15, 2025", visible: false },
-      { id: 2, type: "Lab Report", date: "Dec 10, 2025", visible: false },
-      { id: 3, type: "Lab Report", date: "Dec 5, 2025", visible: false },
-      { id: 4, type: "Prescription", date: "Nov 20, 2025", visible: false },
-      { id: 5, type: "Imaging", date: "Nov 15, 2025", visible: false },
-    ];
-
-    let currentIndex = 0;
-    let intervalId: NodeJS.Timeout | null = null;
-    let resetTimeoutId: NodeJS.Timeout | null = null;
     let expandTimeoutId: NodeJS.Timeout | null = null;
     let collapseTimeoutId: NodeJS.Timeout | null = null;
+    let resetTimeoutId: NodeJS.Timeout | null = null;
     let isCleanedUp = false;
-    
-    const addNextItem = () => {
+
+    const runAnimation = () => {
       if (isCleanedUp) return;
-      
-      if (currentIndex < allItems.length) {
-        setItems((prev) => {
-          if (prev.length >= allItems.length) return prev;
-          return [...prev, { ...allItems[currentIndex], visible: true }];
-        });
-        currentIndex++;
-        
-        // If all items are now added, trigger expansion after 1 second
-        if (currentIndex === allItems.length) {
-          expandTimeoutId = setTimeout(() => {
-            if (!isCleanedUp) {
-              setExpandedId(1); // Expand the first prescription
-              // Collapse after 3.5 seconds
-              collapseTimeoutId = setTimeout(() => {
-                if (!isCleanedUp) setExpandedId(null);
-              }, 3500);
-            }
-          }, 1000);
-        }
-      } else {
-        if (intervalId) {
-          clearInterval(intervalId);
-          intervalId = null;
-        }
-        
-        // Schedule reset after 2 seconds (after prescription collapses)
+
+      // Expand first prescription after 1 second
+      expandTimeoutId = setTimeout(() => {
         if (!isCleanedUp) {
-          resetTimeoutId = setTimeout(() => {
+          setExpandedId(1);
+          
+          // Collapse after 4 seconds
+          collapseTimeoutId = setTimeout(() => {
             if (!isCleanedUp) {
-              setItems([]);
               setExpandedId(null);
-              currentIndex = 0;
-              intervalId = setInterval(addNextItem, 800);
+              
+              // Wait 2 seconds, then repeat
+              resetTimeoutId = setTimeout(() => {
+                if (!isCleanedUp) runAnimation();
+              }, 2000);
             }
-          }, 2000);
+          }, 4000);
         }
-      }
+      }, 1000);
     };
 
-    intervalId = setInterval(addNextItem, 800);
+    runAnimation();
 
     return () => {
       isCleanedUp = true;
-      if (intervalId) clearInterval(intervalId);
-      if (resetTimeoutId) clearTimeout(resetTimeoutId);
       if (expandTimeoutId) clearTimeout(expandTimeoutId);
       if (collapseTimeoutId) clearTimeout(collapseTimeoutId);
+      if (resetTimeoutId) clearTimeout(resetTimeoutId);
     };
   }, []);
 
@@ -496,37 +473,27 @@ const AggregatedHistoryDemo = () => {
 
           {/* Timeline items */}
           <div className="space-y-4 md:space-y-6">
-            <AnimatePresence>
-              {items.map((item, idx) => {
-                const isExpanded = expandedId === item.id;
-                
-                return (
-                  <motion.div
-                    key={item.id}
-                    initial={{ x: -100, opacity: 0, scale: 0.8 }}
-                    animate={{ x: 0, opacity: 1, scale: 1 }}
-                    transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                    className="relative flex items-start gap-3 md:gap-4"
-                  >
-                    {/* Timeline dot */}
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ delay: 0.2 }}
-                      className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-blue-500 border-2 border-white shadow-lg z-10 flex-shrink-0 mt-1"
-                    />
+            {items.map((item) => {
+              const isExpanded = expandedId === item.id;
+              
+              return (
+                <div
+                  key={item.id}
+                  className="relative flex items-start gap-3 md:gap-4"
+                >
+                  {/* Timeline dot */}
+                  <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-blue-500 border-2 border-white shadow-lg z-10 flex-shrink-0 mt-1" />
 
-                    {/* Card */}
-                    <motion.div
-                      initial={{ y: 20 }}
-                      animate={{ 
-                        y: 0,
-                        scale: isExpanded ? 1.02 : 1
-                      }}
-                      className={`flex-1 bg-card border rounded-lg md:rounded-xl p-3 md:p-4 shadow-sm hover:shadow-md transition-all ${
-                        isExpanded ? 'border-primary border-2' : 'border-border'
-                      }`}
-                    >
+                  {/* Card */}
+                  <motion.div
+                    animate={{ 
+                      scale: isExpanded ? 1.02 : 1
+                    }}
+                    transition={{ duration: 0.3 }}
+                    className={`flex-1 bg-card border rounded-lg md:rounded-xl p-3 md:p-4 shadow-sm hover:shadow-md transition-all ${
+                      isExpanded ? 'border-primary border-2' : 'border-border'
+                    }`}
+                  >
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2 md:gap-3 min-w-0 flex-1">
                           <FileText className="w-4 h-4 md:w-5 md:h-5 text-muted-foreground flex-shrink-0" />
@@ -584,10 +551,9 @@ const AggregatedHistoryDemo = () => {
                         )}
                       </AnimatePresence>
                     </motion.div>
-                  </motion.div>
+                  </div>
                 );
               })}
-            </AnimatePresence>
           </div>
         </div>
       </Card>
