@@ -1062,10 +1062,7 @@ export const FeatureShowcase = () => {
             viewport={{ once: true }}
             className="inline-block"
           >
-            <Badge className="mb-4" variant="secondary">
-              <Sparkles className="w-3 h-3 mr-1" />
-              Powered by AI
-            </Badge>
+            
           </motion.div>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
