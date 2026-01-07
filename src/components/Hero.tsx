@@ -16,10 +16,10 @@ export const Hero = () => {
             transition={{ duration: 0.5 }}
             className="space-y-8"
           >
-            <div className="inline-flex items-center gap-2 bg-primary-glow/30 backdrop-blur-sm px-4 py-2 rounded-full border border-primary/10">
+            {/* <div className="inline-flex items-center gap-2 bg-primary-glow/30 backdrop-blur-sm px-4 py-2 rounded-full border border-primary/10">
               <Stethoscope className="h-4 w-4 text-primary" />
               <span className="text-sm font-medium text-foreground">Transforming Healthcare in India</span>
-            </div>
+            </div> */}
 
             <h1 className="text-5xl lg:text-7xl font-bold leading-tight tracking-tight">
               The Future of <br />
