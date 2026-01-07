@@ -22,6 +22,9 @@ import { supabase } from "@/integrations/supabase/client";
 import { PhoneInput } from "@/components/ui/phone-input";
 
 const formSchema = z.object({
+  name: z.string().min(1, {
+    message: "Please enter your name.",
+  }),
   userType: z.enum(["doctor", "patient", "other"], {
     required_error: "Please select your main use case.",
   }),
@@ -53,6 +56,7 @@ const Waitlist = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      name: "",
       userType: undefined,
       userTypeOther: "",
       phoneNumber: "",
@@ -77,6 +81,7 @@ const Waitlist = () => {
       const { error } = await supabase
         .from('waitlist')
         .insert({
+          name: values.name,
           user_type: values.userType,
           user_type_other: values.userTypeOther,
           phone_number: fullPhoneNumber,
@@ -115,6 +120,20 @@ const Waitlist = () => {
         <div className="bg-card p-8 rounded-xl shadow-sm border border-border">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Name *</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Please enter your full name" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
               <FormField
                 control={form.control}
                 name="userType"
