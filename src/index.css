@@ -49,7 +49,7 @@ All colors MUST be HSL.
     --radius: 1rem;
 
     /* Modern Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(199, 89%, 48%), hsl(262, 83%, 58%));
+    --gradient-hero: linear-gradient(135deg, hsl(199, 89%, 48%), hsl(210, 95%, 55%));
     --gradient-card: linear-gradient(to bottom right, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.4));
 
     /* Shadows */
@@ -96,7 +96,7 @@ All colors MUST be HSL.
     --input: 217.2 32.6% 17.5%;
     --ring: 199 89% 48%;
 
-    --gradient-hero: linear-gradient(135deg, hsl(199, 89%, 48%), hsl(262, 83%, 58%));
+    --gradient-hero: linear-gradient(135deg, hsl(199, 89%, 48%), hsl(210, 95%, 55%));
     --gradient-card: linear-gradient(to bottom right, rgba(30, 41, 59, 0.8), rgba(30, 41, 59, 0.4));
 
     --shadow-soft: 0 8px 30px -10px rgba(0, 0, 0, 0.3);
