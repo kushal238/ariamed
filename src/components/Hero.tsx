@@ -32,7 +32,7 @@ export const Hero = () => {
             </p>
 
             <a
-              href="https://abha.abdm.gov.in/abha/v3/"
+              href="https://abha.abdm.gov.in/abha/v3"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-base font-medium text-primary hover:text-primary/80 transition-colors mb-8 group"

@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -1094,7 +1096,9 @@ export const FeatureShowcase = () => {
             return (
               <motion.div
                 key={feature.id}
-                ref={(el) => (mobileCardRefs.current[index] = el)}
+                ref={(el) => {
+                  mobileCardRefs.current[index] = el;
+                }}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -1197,7 +1201,9 @@ export const FeatureShowcase = () => {
             {features.map((feature, index) => (
               <motion.div
                 key={feature.id}
-                ref={(el) => (featureRefs.current[index] = el)}
+                ref={(el) => {
+                  featureRefs.current[index] = el;
+                }}
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
