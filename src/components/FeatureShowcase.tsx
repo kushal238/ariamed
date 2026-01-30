@@ -122,7 +122,7 @@ const SmartDictationDemo = () => {
           <motion.div
             animate={{ scale: [1, 1.1, 1] }}
             transition={{ repeat: Infinity, duration: 2 }}
-            className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-red-500 flex items-center justify-center shadow-md flex-shrink-0"
+            className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-primary flex items-center justify-center shadow-md flex-shrink-0"
           >
             <Mic className="w-5 h-5 md:w-6 md:h-6 text-white" />
           </motion.div>
@@ -271,7 +271,7 @@ const SmartMedicationSearchDemo = () => {
     <div className="w-full h-full flex items-center justify-center p-4 md:p-8">
       <Card className="w-full max-w-full md:max-w-2xl p-4 md:p-8 border-2">
         <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
-          <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-gradient-to-br from-primary to-blue-400 flex items-center justify-center shadow-md flex-shrink-0">
+          <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-primary flex items-center justify-center shadow-md flex-shrink-0">
             <Sparkles className="w-5 h-5 md:w-6 md:h-6 text-white" />
           </div>
           <div className="min-w-0 flex-1">
@@ -432,7 +432,7 @@ const AggregatedHistoryDemo = () => {
     <div className="w-full h-full flex items-center justify-center p-4 md:p-8">
       <Card className="w-full max-w-full md:max-w-2xl p-4 md:p-8 border-2">
         <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
-          <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-blue-500 flex items-center justify-center shadow-md flex-shrink-0">
+          <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-primary flex items-center justify-center shadow-md flex-shrink-0">
             <History className="w-5 h-5 md:w-6 md:h-6 text-white" />
           </div>
           <div className="min-w-0 flex-1">
@@ -484,7 +484,7 @@ const AggregatedHistoryDemo = () => {
                   className="relative flex items-start gap-3 md:gap-4"
                 >
                   {/* Timeline dot */}
-                  <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-blue-500 border-2 border-white shadow-lg z-10 flex-shrink-0 mt-1" />
+                  <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-primary border-2 border-white shadow-lg z-10 flex-shrink-0 mt-1" />
 
                   {/* Card */}
                   <motion.div
@@ -655,7 +655,7 @@ const ComplaintBasedDiagnosisDemo = () => {
     <div className="w-full h-full flex items-center justify-center p-4 md:p-8">
       <Card className="w-full max-w-full md:max-w-2xl p-4 md:p-8 border-2">
         <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
-          <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center shadow-md flex-shrink-0">
+          <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-primary flex items-center justify-center shadow-md flex-shrink-0">
             <Brain className="w-5 h-5 md:w-6 md:h-6 text-white" />
           </div>
           <div className="min-w-0 flex-1">
@@ -854,7 +854,7 @@ const PatientRAGChatbotDemo = () => {
     <div className="w-full h-full flex items-center justify-center p-4 md:p-8">
       <Card className="w-full max-w-full md:max-w-2xl p-4 md:p-8 border-2">
         <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
-          <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center shadow-md flex-shrink-0">
+          <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-primary flex items-center justify-center shadow-md flex-shrink-0">
             <Sparkles className="w-5 h-5 md:w-6 md:h-6 text-white" />
           </div>
           <div className="min-w-0 flex-1">
