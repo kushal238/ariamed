@@ -10,7 +10,7 @@ export const Footer = () => {
             <div className="h-8 w-8 rounded-lg bg-gradient-hero flex items-center justify-center p-1">
               <Image 
                 src="/aria-logo-new.svg"
-                alt="Aria Logo" 
+                alt="Aria Healthcare - AI-powered medical records platform" 
                 width={32}
                 height={32}
                 className="h-full w-full object-contain"
