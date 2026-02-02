@@ -100,8 +100,8 @@ const SmartDictationDemo = () => {
             key={idx}
             className={`${
               part.type === "medication"
-                ? "bg-blue-100 text-blue-700 border-b-2 border-blue-400"
-                : "bg-amber-100 text-amber-700 border-b-2 border-amber-400"
+                ? "bg-muted/50 text-foreground/90 border-b border-border/60"
+                : "bg-amber-100/70 text-amber-800 border-b border-amber-200/80"
             } px-1 rounded`}
           >
             {part.text}
@@ -117,12 +117,12 @@ const SmartDictationDemo = () => {
 
   return (
     <div className="w-full h-full flex items-center justify-center p-4 md:p-8">
-      <Card className="w-full max-w-full md:max-w-2xl p-4 md:p-8 border-2">
+      <Card className="w-full max-w-full md:max-w-2xl p-4 md:p-8 border border-border/60">
         <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
           <motion.div
             animate={{ scale: [1, 1.1, 1] }}
             transition={{ repeat: Infinity, duration: 2 }}
-            className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-primary flex items-center justify-center shadow-md flex-shrink-0"
+            className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-primary flex items-center justify-center flex-shrink-0"
           >
             <Mic className="w-5 h-5 md:w-6 md:h-6 text-white" />
           </motion.div>
@@ -134,13 +134,13 @@ const SmartDictationDemo = () => {
           </div>
         </div>
 
-        <div className="bg-muted/30 rounded-xl p-4 md:p-6 min-h-[180px] md:min-h-[200px] border border-border">
+        <div className="bg-muted/20 rounded-xl p-4 md:p-6 min-h-[180px] md:min-h-[200px] border border-border/60">
           <p className="text-foreground leading-relaxed text-sm md:text-base">
             {renderHighlightedText(text)}
             <motion.span
               animate={{ opacity: [1, 0] }}
               transition={{ repeat: Infinity, duration: 0.8 }}
-              className="inline-block w-0.5 h-5 bg-primary ml-1"
+              className="inline-block w-0.5 h-5 bg-foreground/60 ml-1"
             />
           </p>
         </div>
@@ -269,9 +269,9 @@ const SmartMedicationSearchDemo = () => {
 
   return (
     <div className="w-full h-full flex items-center justify-center p-4 md:p-8">
-      <Card className="w-full max-w-full md:max-w-2xl p-4 md:p-8 border-2">
+      <Card className="w-full max-w-full md:max-w-2xl p-4 md:p-8 border border-border/60">
         <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
-          <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-primary flex items-center justify-center shadow-md flex-shrink-0">
+          <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-primary flex items-center justify-center flex-shrink-0">
             <Sparkles className="w-5 h-5 md:w-6 md:h-6 text-white" />
           </div>
           <div className="min-w-0 flex-1">
@@ -282,7 +282,7 @@ const SmartMedicationSearchDemo = () => {
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-blue-50 to-cyan-50 border-2 border-blue-200 rounded-xl p-4 md:p-6">
+        <div className="bg-muted/20 border border-border/60 rounded-xl p-4 md:p-6">
           <label className="text-xs md:text-sm font-semibold text-foreground mb-2 md:mb-3 block">
             Medication Name (type to search)
           </label>
@@ -294,7 +294,7 @@ const SmartMedicationSearchDemo = () => {
               value={medicationInput}
               readOnly
               placeholder="Start typing medication name..."
-              className="w-full px-3 md:px-4 py-2 md:py-3 border-2 border-border rounded-lg bg-white focus:outline-none focus:border-primary transition-colors text-sm md:text-base font-medium"
+              className="w-full px-3 md:px-4 py-2 md:py-3 border border-border/70 rounded-lg bg-background focus:outline-none focus:border-border transition-colors text-sm md:text-base font-medium"
             />
             
             {/* Typing cursor */}
@@ -302,7 +302,7 @@ const SmartMedicationSearchDemo = () => {
               <motion.div
                 animate={{ opacity: [1, 0] }}
                 transition={{ repeat: Infinity, duration: 0.8 }}
-                className="absolute right-3 md:right-4 top-1/2 -translate-y-1/2 w-0.5 h-4 md:h-5 bg-primary"
+                className="absolute right-3 md:right-4 top-1/2 -translate-y-1/2 w-0.5 h-4 md:h-5 bg-foreground/60"
               />
             )}
           </div>
@@ -317,9 +317,9 @@ const SmartMedicationSearchDemo = () => {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -10, scale: 0.95 }}
                   transition={{ duration: 0.2 }}
-                  className="bg-white border-2 border-blue-200 rounded-lg shadow-xl overflow-hidden"
+                  className="bg-background border border-border/60 rounded-lg overflow-hidden"
                 >
-                  <div className="px-2 md:px-3 py-2 bg-blue-50 border-b border-blue-200">
+                  <div className="px-2 md:px-3 py-2 bg-muted/20 border-b border-border/60">
                     <p className="text-xs font-semibold text-muted-foreground">
                       {displayOptions.length} medications found
                     </p>
@@ -330,8 +330,8 @@ const SmartMedicationSearchDemo = () => {
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: idx * 0.08 }}
-                      className={`px-3 md:px-4 py-2 md:py-3 hover:bg-blue-50 cursor-pointer transition-colors border-b border-border last:border-b-0 ${
-                        idx === 0 ? 'bg-blue-50/50 border-l-4 border-l-primary' : ''
+                      className={`px-3 md:px-4 py-2 md:py-3 hover:bg-muted/30 cursor-pointer transition-colors border-b border-border last:border-b-0 ${
+                        idx === 0 ? "bg-muted/20 border-l-2 border-l-border/80" : ""
                       }`}
                     >
                       <div className="flex items-center justify-between mb-1">
@@ -354,14 +354,14 @@ const SmartMedicationSearchDemo = () => {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  className="flex items-start gap-2 md:gap-3 bg-green-50 border-2 border-green-200 rounded-lg p-3 md:p-4"
+                  className="flex items-start gap-2 md:gap-3 bg-muted/20 border border-border/60 rounded-lg p-3 md:p-4"
                 >
-                  <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5 text-foreground/60 mt-0.5 flex-shrink-0" />
                   <div className="flex-1 min-w-0">
-                    <p className="font-semibold text-xs md:text-sm text-green-900">
+                    <p className="font-semibold text-xs md:text-sm text-foreground">
                       Selected: {selectedMedication}
                     </p>
-                    <p className="text-xs text-green-700 mt-1">
+                    <p className="text-xs text-muted-foreground mt-1">
                       Medication added to prescription
                     </p>
                   </div>
@@ -430,9 +430,9 @@ const AggregatedHistoryDemo = () => {
 
   return (
     <div className="w-full h-full flex items-center justify-center p-4 md:p-8">
-      <Card className="w-full max-w-full md:max-w-2xl p-4 md:p-8 border-2">
+      <Card className="w-full max-w-full md:max-w-2xl p-4 md:p-8 border border-border/60">
         <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
-          <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-primary flex items-center justify-center shadow-md flex-shrink-0">
+          <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-primary flex items-center justify-center flex-shrink-0">
             <History className="w-5 h-5 md:w-6 md:h-6 text-white" />
           </div>
           <div className="min-w-0 flex-1">
@@ -444,7 +444,7 @@ const AggregatedHistoryDemo = () => {
         </div>
 
         {/* Patient Info Card */}
-        <div className="bg-gradient-to-br from-blue-50 to-cyan-50 border-2 border-blue-200 rounded-xl p-4 md:p-5 mb-4 md:mb-6">
+        <div className="bg-muted/20 border border-border/60 rounded-xl p-4 md:p-5 mb-4 md:mb-6">
           <div className="flex items-start justify-between mb-3">
             <div className="min-w-0 flex-1 mr-2">
               <h4 className="font-bold text-base md:text-lg">Sarah Johnson</h4>
@@ -454,24 +454,24 @@ const AggregatedHistoryDemo = () => {
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 md:gap-3 text-xs md:text-sm">
-            <div className="bg-white/60 rounded-lg p-2 md:p-3 border border-blue-100">
+            <div className="bg-background rounded-lg p-2 md:p-3 border border-border/60">
               <p className="text-muted-foreground font-medium mb-1 text-xs">Conditions</p>
               <p className="font-semibold text-xs">Hypertension</p>
             </div>
-            <div className="bg-white/60 rounded-lg p-2 md:p-3 border border-blue-100">
+            <div className="bg-background rounded-lg p-2 md:p-3 border border-border/60">
               <p className="text-muted-foreground font-medium mb-1 text-xs">Allergies</p>
               <p className="font-semibold text-xs">Penicillin</p>
             </div>
-            <div className="bg-white/60 rounded-lg p-2 md:p-3 border border-blue-100">
+            <div className="bg-background rounded-lg p-2 md:p-3 border border-border/60">
               <p className="text-muted-foreground font-medium mb-1 text-xs">Active Meds</p>
               <p className="font-semibold text-xs">Lisinopril 10mg</p>
             </div>
           </div>
         </div>
 
-        <div className="relative bg-muted/30 rounded-xl p-4 md:p-6 border border-border">
+        <div className="relative bg-muted/20 rounded-xl p-4 md:p-6 border border-border/60">
           {/* Timeline line */}
-          <div className="absolute left-8 md:left-10 top-6 bottom-6 w-0.5 bg-gradient-to-b from-blue-200 via-blue-400 to-blue-200" />
+          <div className="absolute left-8 md:left-10 top-6 bottom-6 w-0.5 bg-border/70" />
 
           {/* Timeline items */}
           <div className="space-y-4 md:space-y-6">
@@ -484,16 +484,16 @@ const AggregatedHistoryDemo = () => {
                   className="relative flex items-start gap-3 md:gap-4"
                 >
                   {/* Timeline dot */}
-                  <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-primary border-2 border-white shadow-lg z-10 flex-shrink-0 mt-1" />
+                  <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-foreground/40 border border-border/60 z-10 flex-shrink-0 mt-1" />
 
                   {/* Card */}
                   <motion.div
-                    animate={{ 
-                      scale: isExpanded ? 1.02 : 1
+                    animate={{
+                      scale: isExpanded ? 1.01 : 1
                     }}
                     transition={{ duration: 0.3 }}
-                    className={`flex-1 bg-card border rounded-lg md:rounded-xl p-3 md:p-4 shadow-sm hover:shadow-md transition-all ${
-                      isExpanded ? 'border-primary border-2' : 'border-border'
+                    className={`flex-1 bg-card border rounded-lg md:rounded-xl p-3 md:p-4 transition-all ${
+                      isExpanded ? "border-border/80 bg-muted/20" : "border-border/60"
                     }`}
                   >
                       <div className="flex items-center justify-between">
@@ -516,8 +516,8 @@ const AggregatedHistoryDemo = () => {
                           >
                             <div className="mt-3 md:mt-4 pt-3 md:pt-4 border-t border-border space-y-3 md:space-y-4">
                               {/* Diagnosis Section */}
-                              <div className="bg-blue-50/50 rounded-lg p-2.5 md:p-3 border border-blue-100">
-                                <p className="text-xs font-medium text-blue-900 mb-1">Diagnosis</p>
+                              <div className="bg-muted/30 rounded-lg p-2.5 md:p-3 border border-border/60">
+                                <p className="text-xs font-medium text-muted-foreground mb-1">Diagnosis</p>
                                 <p className="font-semibold text-xs md:text-sm text-foreground">Acute Upper Respiratory Infection</p>
                                 <p className="text-xs text-muted-foreground mt-1">
                                   Symptoms: Fever (99.8°F), cough, sore throat, nasal congestion
@@ -528,14 +528,14 @@ const AggregatedHistoryDemo = () => {
                               <div className="space-y-2 md:space-y-3">
                                 <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Prescribed Medications</p>
                                 <div className="flex items-start gap-2 md:gap-3">
-                                  <Pill className="w-3.5 h-3.5 md:w-4 md:h-4 text-primary mt-1 flex-shrink-0" />
+                                  <Pill className="w-3.5 h-3.5 md:w-4 md:h-4 text-foreground/60 mt-1 flex-shrink-0" />
                                   <div className="flex-1 min-w-0">
                                     <p className="font-semibold text-xs md:text-sm">Paracetamol 500mg</p>
                                     <p className="text-xs text-muted-foreground">1 tablet, twice daily after meals</p>
                                   </div>
                                 </div>
                                 <div className="flex items-start gap-2 md:gap-3">
-                                  <Pill className="w-3.5 h-3.5 md:w-4 md:h-4 text-primary mt-1 flex-shrink-0" />
+                                  <Pill className="w-3.5 h-3.5 md:w-4 md:h-4 text-foreground/60 mt-1 flex-shrink-0" />
                                   <div className="flex-1 min-w-0">
                                     <p className="font-semibold text-xs md:text-sm">Cetirizine 10mg</p>
                                     <p className="text-xs text-muted-foreground">1 tablet, once daily before bedtime</p>
@@ -653,9 +653,9 @@ const ComplaintBasedDiagnosisDemo = () => {
 
   return (
     <div className="w-full h-full flex items-center justify-center p-4 md:p-8">
-      <Card className="w-full max-w-full md:max-w-2xl p-4 md:p-8 border-2">
+      <Card className="w-full max-w-full md:max-w-2xl p-4 md:p-8 border border-border/60">
         <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
-          <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-primary flex items-center justify-center shadow-md flex-shrink-0">
+          <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-primary flex items-center justify-center flex-shrink-0">
             <Brain className="w-5 h-5 md:w-6 md:h-6 text-white" />
           </div>
           <div className="min-w-0 flex-1">
@@ -667,9 +667,9 @@ const ComplaintBasedDiagnosisDemo = () => {
         </div>
 
         {/* Patient Info */}
-        <div className="bg-gradient-to-br from-slate-50 to-blue-50 border border-border rounded-lg p-3 md:p-4 mb-3 md:mb-4">
+        <div className="bg-muted/20 border border-border/60 rounded-lg p-3 md:p-4 mb-3 md:mb-4">
           <div className="flex items-center gap-2 md:gap-3">
-            <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+            <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-muted/60 flex items-center justify-center text-foreground/80 font-semibold text-sm flex-shrink-0">
               SJ
             </div>
             <div className="min-w-0 flex-1">
@@ -680,7 +680,7 @@ const ComplaintBasedDiagnosisDemo = () => {
         </div>
 
         {/* Complaints Input */}
-        <div className="bg-gradient-to-br from-blue-50 to-cyan-50 border-2 border-blue-200 rounded-xl p-4 md:p-6 mb-3 md:mb-4">
+        <div className="bg-muted/20 border border-border/60 rounded-xl p-4 md:p-6 mb-3 md:mb-4">
           <label className="text-xs md:text-sm font-semibold text-foreground mb-2 md:mb-3 block">
             Chief Complaints
           </label>
@@ -689,13 +689,13 @@ const ComplaintBasedDiagnosisDemo = () => {
               value={complaints}
               readOnly
               placeholder="Enter patient complaints..."
-              className="w-full px-3 md:px-4 py-2 md:py-3 border-2 border-border rounded-lg bg-white focus:outline-none focus:border-primary transition-colors text-xs md:text-sm min-h-[70px] md:min-h-[80px] resize-none"
+              className="w-full px-3 md:px-4 py-2 md:py-3 border border-border/70 rounded-lg bg-background focus:outline-none focus:border-border transition-colors text-xs md:text-sm min-h-[70px] md:min-h-[80px] resize-none"
             />
             {complaints && complaints.length < fullComplaintsText.length && (
               <motion.div
                 animate={{ opacity: [1, 0] }}
                 transition={{ repeat: Infinity, duration: 0.8 }}
-                className="absolute right-3 md:right-4 bottom-3 md:bottom-4 w-0.5 h-3 md:h-4 bg-primary"
+              className="absolute right-3 md:right-4 bottom-3 md:bottom-4 w-0.5 h-3 md:h-4 bg-foreground/60"
               />
             )}
           </div>
@@ -708,7 +708,7 @@ const ComplaintBasedDiagnosisDemo = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              className="bg-gradient-to-r from-blue-50 to-cyan-50 border-2 border-blue-200 rounded-lg p-3 md:p-4 mb-3 md:mb-4"
+              className="bg-muted/20 border border-border/60 rounded-lg p-3 md:p-4 mb-3 md:mb-4"
             >
               <div className="flex items-center gap-2 md:gap-3">
                 <motion.div
@@ -716,7 +716,7 @@ const ComplaintBasedDiagnosisDemo = () => {
                   transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
                   className="flex-shrink-0"
                 >
-                  <Brain className="w-4 h-4 md:w-5 md:h-5 text-primary" />
+                  <Brain className="w-4 h-4 md:w-5 md:h-5 text-foreground/70" />
                 </motion.div>
                 <div className="flex-1 min-w-0">
                   <p className="text-xs md:text-sm font-semibold text-foreground">Analyzing with Patient History...</p>
@@ -737,7 +737,7 @@ const ComplaintBasedDiagnosisDemo = () => {
               className="space-y-2 md:space-y-3"
             >
               <div className="flex items-center gap-2 mb-2 md:mb-3">
-                <Sparkles className="w-3.5 h-3.5 md:w-4 md:h-4 text-primary flex-shrink-0" />
+                <Sparkles className="w-3.5 h-3.5 md:w-4 md:h-4 text-foreground/70 flex-shrink-0" />
                 <p className="text-xs md:text-sm font-semibold text-foreground">AI Diagnosis Suggestions</p>
               </div>
               
@@ -747,7 +747,7 @@ const ComplaintBasedDiagnosisDemo = () => {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: idx * 0.2 }}
-                  className="border-l-4 border-green-500 bg-green-50/80 rounded-lg p-3 md:p-4"
+                  className="border-l-2 border-border/70 bg-muted/20 rounded-lg p-3 md:p-4"
                 >
                   <div className="flex items-start justify-between gap-2 mb-2">
                     <h5 className="font-bold text-xs md:text-sm flex-1">{result.diagnosis}</h5>
@@ -852,9 +852,9 @@ const PatientRAGChatbotDemo = () => {
 
   return (
     <div className="w-full h-full flex items-center justify-center p-4 md:p-8">
-      <Card className="w-full max-w-full md:max-w-2xl p-4 md:p-8 border-2">
+      <Card className="w-full max-w-full md:max-w-2xl p-4 md:p-8 border border-border/60">
         <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
-          <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-primary flex items-center justify-center shadow-md flex-shrink-0">
+          <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-primary flex items-center justify-center flex-shrink-0">
             <Sparkles className="w-5 h-5 md:w-6 md:h-6 text-white" />
           </div>
           <div className="min-w-0 flex-1">
@@ -866,7 +866,7 @@ const PatientRAGChatbotDemo = () => {
         </div>
 
         {/* Chat Interface */}
-        <div className="bg-gradient-to-br from-slate-50 to-blue-50 border-2 border-border rounded-xl p-4 md:p-6 min-h-[350px] md:min-h-[400px]">
+        <div className="bg-muted/20 border border-border/60 rounded-xl p-4 md:p-6 min-h-[350px] md:min-h-[400px]">
           <div className="space-y-3 md:space-y-4">
             {/* Display sent messages */}
             {messages.map((msg, idx) => (
@@ -879,8 +879,8 @@ const PatientRAGChatbotDemo = () => {
                 <div
                   className={`max-w-[90%] md:max-w-[85%] rounded-lg p-3 md:p-4 ${
                     msg.role === "doctor"
-                      ? "bg-primary text-white"
-                      : "bg-white border border-border"
+                      ? "bg-muted/40 text-foreground border border-border/60"
+                      : "bg-background border border-border/60"
                   }`}
                 >
                   <p className="text-xs md:text-sm leading-relaxed">{msg.text}</p>
@@ -902,17 +902,17 @@ const PatientRAGChatbotDemo = () => {
                       <motion.div
                         animate={{ opacity: [0.3, 1, 0.3] }}
                         transition={{ repeat: Infinity, duration: 1.5 }}
-                        className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-primary"
+                        className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-foreground/50"
                       />
                       <motion.div
                         animate={{ opacity: [0.3, 1, 0.3] }}
                         transition={{ repeat: Infinity, duration: 1.5, delay: 0.2 }}
-                        className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-primary"
+                        className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-foreground/50"
                       />
                       <motion.div
                         animate={{ opacity: [0.3, 1, 0.3] }}
                         transition={{ repeat: Infinity, duration: 1.5, delay: 0.4 }}
-                        className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-primary"
+                        className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-foreground/50"
                       />
                     </div>
                   </div>
@@ -927,7 +927,7 @@ const PatientRAGChatbotDemo = () => {
                 animate={{ opacity: 1, y: 0 }}
                 className="flex justify-end"
               >
-                <div className="max-w-[90%] md:max-w-[85%] bg-primary text-white rounded-lg p-3 md:p-4">
+                <div className="max-w-[90%] md:max-w-[85%] bg-muted/40 text-foreground border border-border/60 rounded-lg p-3 md:p-4">
                   <p className="text-xs md:text-sm">
                     {currentTyping}
                     <motion.span
@@ -1054,7 +1054,7 @@ export const FeatureShowcase = () => {
   };
 
   return (
-    <section className="w-full min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50 py-20">
+    <section className="w-full min-h-screen bg-muted/20 border-y border-border/60 py-20">
       <div className="max-w-7xl mx-auto px-6">
         {/* Section Header */}
         <div className="text-center mb-16">
@@ -1071,16 +1071,17 @@ export const FeatureShowcase = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-bold text-primary mb-4"
+            className="text-4xl md:text-5xl font-semibold text-foreground mb-4"
           >
             Intelligent Healthcare Workflow
           </motion.h2>
+          <div className="mx-auto h-px w-24 bg-primary/30" />
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-lg text-gray-600 max-w-2xl mx-auto"
+            className="text-lg text-muted-foreground max-w-2xl mx-auto mt-4"
           >
             Experience the future of medical documentation with AI-powered
             insights and seamless workflow automation
@@ -1106,9 +1107,7 @@ export const FeatureShowcase = () => {
               >
                 <Card
                   className={`overflow-hidden transition-all duration-[400ms] ${
-                    isExpanded
-                      ? "border-2 border-blue-500 shadow-2xl"
-                      : "border border-gray-200"
+                    isExpanded ? "border border-border/60" : "border border-border/60"
                   }`}
                 >
                   {/* Card Header - Always Visible */}
@@ -1119,26 +1118,24 @@ export const FeatureShowcase = () => {
                     <div className="flex items-start gap-4">
                       <div
                         className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-all ${
-                          isExpanded
-                            ? "bg-gradient-to-br from-primary to-blue-400"
-                            : "bg-gray-100"
+                          isExpanded ? "bg-primary" : "bg-muted/30"
                         }`}
                       >
                         <feature.icon
                           className={`w-6 h-6 ${
-                            isExpanded ? "text-white" : "text-gray-600"
+                            isExpanded ? "text-white" : "text-foreground/60"
                           }`}
                         />
                       </div>
                       <div className="flex-1">
                         <h3
                           className={`text-xl font-semibold mb-2 ${
-                            isExpanded ? "text-blue-600" : "text-gray-900"
+                            isExpanded ? "text-foreground" : "text-foreground/80"
                           }`}
                         >
                           {feature.title}
                         </h3>
-                        <p className="text-gray-600 leading-relaxed">
+                        <p className="text-muted-foreground leading-relaxed">
                           {feature.description}
                         </p>
                       </div>
@@ -1149,7 +1146,7 @@ export const FeatureShowcase = () => {
                       >
                         <ChevronRight
                           className={`w-6 h-6 transform rotate-90 ${
-                            isExpanded ? "text-blue-600" : "text-gray-400"
+                            isExpanded ? "text-muted-foreground" : "text-muted-foreground"
                           }`}
                         />
                       </motion.div>
@@ -1166,7 +1163,7 @@ export const FeatureShowcase = () => {
                         transition={{ duration: 0.4, ease: "easeInOut" }}
                         className="overflow-hidden"
                       >
-                        <div className="border-t border-gray-200">
+                        <div className="border-t border-border/60">
                           <DemoComponent />
                         </div>
                       </motion.div>
@@ -1189,7 +1186,7 @@ export const FeatureShowcase = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.3 }}
-                className="rounded-2xl overflow-hidden shadow-2xl bg-white"
+                className="rounded-2xl overflow-hidden border border-border/60 bg-background"
               >
                 <ActiveDemoComponent />
               </motion.div>
@@ -1210,52 +1207,46 @@ export const FeatureShowcase = () => {
                 transition={{ delay: index * 0.1 }}
                 onClick={() => setActiveFeature(index)}
                 className={`cursor-pointer transition-all duration-300 ${
-                  activeFeature === index
-                    ? "scale-105"
-                    : "scale-100 opacity-60 hover:opacity-100"
+                  activeFeature === index ? "opacity-100" : "opacity-70 hover:opacity-100"
                 }`}
               >
                 <Card
                   className={`p-8 ${
                     activeFeature === index
-                      ? "border-2 border-blue-500 shadow-xl bg-white"
-                      : "border border-gray-200 hover:border-blue-300"
+                      ? "border border-border/60"
+                      : "border border-border/60 hover:border-border/80"
                   }`}
                 >
                   <div className="flex items-start gap-4">
                     <div
                       className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                        activeFeature === index
-                          ? "bg-gradient-to-br from-primary to-blue-400"
-                          : "bg-gray-100"
+                        activeFeature === index ? "bg-primary" : "bg-muted/30"
                       }`}
                     >
                       <feature.icon
                         className={`w-6 h-6 ${
                           activeFeature === index
                             ? "text-white"
-                            : "text-gray-600"
+                            : "text-foreground/60"
                         }`}
                       />
                     </div>
                     <div className="flex-1">
                       <h3
                         className={`text-xl font-semibold mb-2 ${
-                          activeFeature === index
-                            ? "text-blue-600"
-                            : "text-gray-900"
+                          activeFeature === index ? "text-foreground" : "text-foreground/80"
                         }`}
                       >
                         {feature.title}
                       </h3>
-                      <p className="text-gray-600 leading-relaxed">
+                      <p className="text-muted-foreground leading-relaxed">
                         {feature.description}
                       </p>
                       {activeFeature === index && (
                         <motion.div
                           initial={{ width: 0 }}
                           animate={{ width: "100%" }}
-                          className="h-1 bg-gradient-to-r from-primary to-blue-400 rounded-full mt-4"
+                          className="h-px bg-border/80 rounded-full mt-4"
                         />
                       )}
                     </div>
