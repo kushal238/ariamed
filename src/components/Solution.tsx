@@ -1,68 +1,64 @@
-import { Shield, Users, CheckCircle } from "lucide-react";
+import { Shield, Users } from "lucide-react";
 
 export const Solution = () => {
   return (
-    <section id="solution" className="py-24 bg-secondary/30">
+    <section id="solution" className="py-24 border-y border-border/60 bg-muted/20">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl lg:text-5xl font-bold mb-16 text-center text-foreground">
-          Why Choose <span className="text-transparent bg-clip-text bg-gradient-hero">Aria</span>?
+        <h2 className="text-3xl lg:text-5xl font-semibold mb-12 md:mb-16 text-center text-foreground">
+          Why Choose <span className="text-primary">Aria</span>?
         </h2>
 
-        <div className="grid md:grid-cols-2 gap-8 lg:gap-12 max-w-6xl mx-auto">
+        <div className="grid gap-8 md:gap-12 lg:grid-cols-2 max-w-6xl mx-auto">
           {/* Doctor Section */}
-          <div className="bg-card rounded-3xl p-8 shadow-soft hover:shadow-medium transition-all duration-300 border border-border/50">
-            <div className="flex items-center gap-4 mb-8 border-b border-border/50 pb-4">
-              <div className="h-14 w-14 rounded-2xl bg-primary/10 flex items-center justify-center">
-                <Shield className="h-7 w-7 text-primary" />
+          <div className="space-y-10 md:space-y-8 rounded-2xl border border-border/60 bg-background/60 p-6 md:p-8 lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0">
+            <div className="flex items-center gap-4 pb-6 md:pb-4 border-b border-border/50">
+              <div className="h-12 w-12 rounded-full border border-border/60 flex items-center justify-center text-primary">
+                <Shield className="h-6 w-6" />
               </div>
-              <h3 className="text-2xl font-bold text-foreground">For Doctors</h3>
+              <div>
+                <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">For Doctors</p>
+                <h3 className="text-2xl font-semibold text-foreground">Designed for clinical flow</h3>
+              </div>
             </div>
 
-            <ul className="space-y-4">
+            <ul className="space-y-6">
               {[
                 "Reduce paperwork and administrative burden",
                 "Enhance diagnosis with instant patient history and AI-powered insights",
                 "Streamline patient communication and follow-ups",
                 "Seamless ABHA & ABDM Integration",
               ].map((item, index) => (
-                <li
-                  key={index}
-                  className="flex items-start gap-3 p-3"
-                >
-                  <div className="mt-1 h-5 w-5 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <CheckCircle className="h-3 w-3 text-primary" />
-                  </div>
-                  <span className="text-foreground/80 font-medium text-lg leading-relaxed">{item}</span>
+                <li key={index} className="flex items-start gap-4">
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-muted-foreground/70 flex-shrink-0" />
+                  <span className="text-foreground/80 text-base md:text-lg leading-relaxed">{item}</span>
                 </li>
               ))}
             </ul>
           </div>
 
           {/* Patient Section */}
-          <div className="bg-card rounded-3xl p-8 shadow-soft hover:shadow-medium transition-all duration-300 border border-border/50">
-            <div className="flex items-center gap-4 mb-8 border-b border-border/50 pb-4">
-              <div className="h-14 w-14 rounded-2xl bg-accent/10 flex items-center justify-center">
-                <Users className="h-7 w-7 text-accent" />
+          <div className="space-y-10 md:space-y-8 rounded-2xl border border-border/60 bg-background/60 p-6 md:p-8 lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0 lg:border-l lg:border-border/50 lg:pl-12">
+            <div className="flex items-center gap-4 pb-6 md:pb-4 border-b border-border/50">
+              <div className="h-12 w-12 rounded-full border border-border/60 flex items-center justify-center text-success/80">
+                <Users className="h-6 w-6" />
               </div>
-              <h3 className="text-2xl font-bold text-foreground">For Patients</h3>
+              <div>
+                <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">For Patients</p>
+                <h3 className="text-2xl font-semibold text-foreground">Clarity across your care</h3>
+              </div>
             </div>
 
-            <ul className="space-y-4">
+            <ul className="space-y-6">
               {[
                 "Access your complete medical history anytime, anywhere",
                 "Never lose a prescription or medical record again",
                 "Share records easily with any healthcare provider",
                 "Track medications and treatment progress digitally",
-                "Upload and digitize old medical records and lab reports"
+                "Upload and digitize old medical records and lab reports",
               ].map((item, index) => (
-                <li
-                  key={index}
-                  className="flex items-start gap-3 p-3"
-                >
-                  <div className="mt-1 h-5 w-5 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
-                    <CheckCircle className="h-3 w-3 text-accent" />
-                  </div>
-                  <span className="text-foreground/80 font-medium text-lg leading-relaxed">{item}</span>
+                <li key={index} className="flex items-start gap-4">
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-muted-foreground/70 flex-shrink-0" />
+                  <span className="text-foreground/80 text-base md:text-lg leading-relaxed">{item}</span>
                 </li>
               ))}
             </ul>
