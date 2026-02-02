@@ -1,4 +1,4 @@
-import { Shield, Users, CheckCircle } from "lucide-react";
+import { Shield, Users } from "lucide-react";
 
 export const Solution = () => {
   return (
@@ -29,9 +29,7 @@ export const Solution = () => {
                 "Seamless ABHA & ABDM Integration",
               ].map((item, index) => (
                 <li key={index} className="flex items-start gap-4">
-                  <div className="mt-1.5 h-5 w-5 rounded-full border border-border/60 flex items-center justify-center flex-shrink-0">
-                    <CheckCircle className="h-3.5 w-3.5 text-muted-foreground" />
-                  </div>
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-muted-foreground/70 flex-shrink-0" />
                   <span className="text-foreground/80 text-lg leading-relaxed">{item}</span>
                 </li>
               ))}
@@ -41,7 +39,7 @@ export const Solution = () => {
           {/* Patient Section */}
           <div className="space-y-8 lg:border-l lg:border-border/50 lg:pl-12">
             <div className="flex items-center gap-4 pb-4 border-b border-border/50">
-              <div className="h-12 w-12 rounded-full border border-border/60 flex items-center justify-center text-accent">
+              <div className="h-12 w-12 rounded-full border border-border/60 flex items-center justify-center text-success/80">
                 <Users className="h-6 w-6" />
               </div>
               <div>
@@ -59,9 +57,7 @@ export const Solution = () => {
                 "Upload and digitize old medical records and lab reports",
               ].map((item, index) => (
                 <li key={index} className="flex items-start gap-4">
-                  <div className="mt-1.5 h-5 w-5 rounded-full border border-border/60 flex items-center justify-center flex-shrink-0">
-                    <CheckCircle className="h-3.5 w-3.5 text-muted-foreground" />
-                  </div>
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-muted-foreground/70 flex-shrink-0" />
                   <span className="text-foreground/80 text-lg leading-relaxed">{item}</span>
                 </li>
               ))}
