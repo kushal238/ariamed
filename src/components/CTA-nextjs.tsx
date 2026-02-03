@@ -34,7 +34,7 @@ export const CTA = () => {
             <Button
               size="lg"
               variant="outline"
-              className="h-12 px-7 text-base border-border text-foreground hover:bg-muted"
+              className="h-12 px-7 text-base border-border text-foreground hover:bg-muted/40 hover:text-foreground hover:border-border/80"
               onClick={() => (window.location.href = "mailto:kushal@ariamed.ai")}
             >
               <Mail className="mr-2 h-4 w-4" />
