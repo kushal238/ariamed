@@ -129,6 +129,12 @@ All colors MUST be HSL.
     -moz-osx-font-smoothing: grayscale;
   }
 
+  @media (min-width: 1024px) {
+    html {
+      font-size: 17px;
+    }
+  }
+
   /* Performance optimizations */
   * {
     -webkit-tap-highlight-color: transparent;
