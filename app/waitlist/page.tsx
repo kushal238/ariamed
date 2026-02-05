@@ -217,12 +217,12 @@ export default function WaitlistPage() {
                       </FormLabel>
                     </div>
                     {[
-                      { id: "appointment", label: "Appointment scheduling/management" },
-                      { id: "ABHA", label: "ABHA-integration" },
-                      { id: "messaging", label: "Secure messaging with patients/healthcare providers" },
-                      { id: "records", label: "Access to medical records" },
-                      { id: "telehealth", label: "Telehealth/virtual consultations" },
                       { id: "ai_features", label: "AI-powered features" },
+                      { id: "records", label: "Access to medical records" },
+                      { id: "ABHA", label: "ABHA-integration" },
+                      { id: "appointment", label: "Appointment scheduling/management" },
+                      { id: "messaging", label: "Secure messaging with patients/healthcare providers" },
+                      { id: "telehealth", label: "Telehealth/virtual consultations" },
                       { id: "other", label: "Other" },
                     ].map((item) => (
                       <FormField
