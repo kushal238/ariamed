@@ -16,13 +16,15 @@ export const Hero = () => {
             className="space-y-8"
           >
             <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-tight tracking-tight">
-              The Future of <br />
-              <span className="text-primary">Medical Records</span> <br />
-              Starts Here
+              Enhance your clinical
+              <br />
+              workflows with
+              <br />
+              <span className="text-primary">EMR-integrated AI</span>
             </h1>
 
             <p className="text-base sm:text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
-              Streamline your practice with Intelligent ABHA-integrated medical record management system. Save time, enhance patient care, and focus on what matters most.
+              Streamline your practice with Intelligent ABHA-linked medical record management system. Save time, enhance patient care, and focus on what matters most.
             </p>
 
             <a

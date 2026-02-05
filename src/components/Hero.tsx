@@ -22,13 +22,15 @@ export const Hero = () => {
             </div> */}
 
             <h1 className="text-5xl lg:text-7xl font-bold leading-tight tracking-tight">
-              The Future of <br />
-              <span className="text-primary">Medical Records</span> <br />
-              Starts Here
+              Enhance your clinical
+              <br />
+              workflows with
+              <br />
+              <span className="text-primary">EMR-integrated AI</span>
             </h1>
 
             <p className="text-xl text-muted-foreground leading-relaxed max-w-xl">
-              ABHA-integrated digital prescriptions that empower doctors and patients with complete medical history visibility.
+              ABHA-linked digital prescriptions that empower doctors and patients with complete medical history visibility.
             </p>
 
             <a
