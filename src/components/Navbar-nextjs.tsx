@@ -27,6 +27,20 @@ export const Navbar = () => {
             ticking = false;
             return;
           }
+          // Stay hidden inside scroll-pinned sections
+          const pinEl = document.querySelector("[data-scroll-pin]") as HTMLElement | null;
+          if (pinEl) {
+            const pinTop = pinEl.offsetTop;
+            const pinBottom = pinTop + pinEl.offsetHeight;
+            if (currentY >= pinTop && currentY < pinBottom) {
+              offsetRef.current = maxOffset;
+              setScrollOffset(maxOffset);
+              lastYRef.current = currentY;
+              ticking = false;
+              return;
+            }
+          }
+
           const delta = currentY - lastYRef.current;
           const absDelta = Math.abs(delta);
           if (absDelta < 6) {

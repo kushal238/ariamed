@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 import {
   Mic,
   Brain,
@@ -787,12 +787,16 @@ const PatientRAGChatbotDemo = () => {
 
   useEffect(() => {
     const timeouts: NodeJS.Timeout[] = [];
+    const intervals: NodeJS.Timeout[] = [];
+    let isCleanedUp = false;
     let conversationIndex = 0;
 
     const runConversation = () => {
+      if (isCleanedUp) return;
       if (conversationIndex >= conversation.length) {
         // Reset after all conversations
         const resetTimeout = setTimeout(() => {
+          if (isCleanedUp) return;
           setMessages([]);
           setCurrentTyping("");
           conversationIndex = 0;
@@ -803,30 +807,37 @@ const PatientRAGChatbotDemo = () => {
       }
 
       const current = conversation[conversationIndex];
-      
+
       // Doctor types question
       let doctorTypingIndex = 0;
       const doctorTypingInterval = setInterval(() => {
+        if (isCleanedUp) {
+          clearInterval(doctorTypingInterval);
+          return;
+        }
         if (doctorTypingIndex <= current.doctor.length) {
           setCurrentTyping(current.doctor.slice(0, doctorTypingIndex));
           doctorTypingIndex++;
         } else {
           clearInterval(doctorTypingInterval);
-          
+
           // Add doctor message
           const addDoctorTimeout = setTimeout(() => {
+            if (isCleanedUp) return;
             setMessages(prev => [...prev, { role: "doctor", text: current.doctor }]);
             setCurrentTyping("");
-            
+
             // AI thinks
             const aiThinkTimeout = setTimeout(() => {
+              if (isCleanedUp) return;
               setIsAITyping(true);
-              
+
               // AI responds
               const aiResponseTimeout = setTimeout(() => {
+                if (isCleanedUp) return;
                 setIsAITyping(false);
                 setMessages(prev => [...prev, { role: "ai", text: current.ai }]);
-                
+
                 // Move to next conversation
                 conversationIndex++;
                 const nextTimeout = setTimeout(runConversation, 1500);
@@ -839,13 +850,16 @@ const PatientRAGChatbotDemo = () => {
           timeouts.push(addDoctorTimeout);
         }
       }, 50);
+      intervals.push(doctorTypingInterval);
 
     };
 
     runConversation();
 
     return () => {
+      isCleanedUp = true;
       timeouts.forEach(timeout => clearTimeout(timeout));
+      intervals.forEach(interval => clearInterval(interval));
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -1002,26 +1016,48 @@ export const FeatureShowcase = () => {
   const [activeFeature, setActiveFeature] = useState(0);
   const [expandedMobile, setExpandedMobile] = useState<number | null>(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const featureRefs = useRef<(HTMLDivElement | null)[]>([]);
   const mobileCardRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Desktop scroll-driven refs
+  const scrollSectionRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: scrollSectionRef,
+    offset: ["start start", "end end"],
+  });
+
+  // Map scroll progress to active feature index
+  useMotionValueEvent(scrollYProgress, "change", (progress) => {
+    const featureCount = features.length;
+    const index = Math.min(
+      featureCount - 1,
+      Math.floor(progress * featureCount)
+    );
+    setActiveFeature(index);
+  });
+
+  // Click a tab → smooth-scroll to that feature's scroll position
+  const handleTabClick = useCallback((index: number) => {
+    if (!scrollSectionRef.current) return;
+    const section = scrollSectionRef.current;
+    const sectionTop = section.offsetTop;
+    const sectionHeight = section.scrollHeight - window.innerHeight;
+    const targetScroll =
+      sectionTop + (index / features.length) * sectionHeight;
+    window.scrollTo({ top: targetScroll, behavior: "smooth" });
+  }, []);
 
   const ActiveDemoComponent = features[activeFeature].component;
 
   const handleMobileCardClick = (index: number) => {
-    // Prevent rapid clicks during transition
     if (isTransitioning) return;
 
-    // Case 1: Clicking the same card - just collapse it
     if (expandedMobile === index) {
       setExpandedMobile(null);
       return;
     }
 
-    // Case 2: No card is expanded - expand immediately
     if (expandedMobile === null) {
       setExpandedMobile(index);
-      // Scroll into view after a brief delay for smooth UX
       setTimeout(() => {
         mobileCardRefs.current[index]?.scrollIntoView({
           behavior: 'smooth',
@@ -1031,40 +1067,33 @@ export const FeatureShowcase = () => {
       return;
     }
 
-    // Case 3: Another card is expanded - collapse first, then expand
     setIsTransitioning(true);
-    
-    // Step 1: Collapse current card
     setExpandedMobile(null);
-    
-    // Step 2: Wait for collapse animation, scroll to new card position
+
     setTimeout(() => {
-      // First scroll the card into view while collapsed
       mobileCardRefs.current[index]?.scrollIntoView({
         behavior: 'smooth',
         block: 'center',
       });
-      
-      // Then expand it after a brief moment
       setTimeout(() => {
         setExpandedMobile(index);
         setIsTransitioning(false);
-      }, 300); // Wait for scroll to mostly complete
-    }, 400); // 400ms matches the card collapse animation duration
+      }, 300);
+    }, 400);
   };
 
   return (
-    <section className="w-full min-h-screen bg-muted/20 border-y border-border/60 py-20">
-      <div className="max-w-7xl mx-auto px-6">
-        {/* Section Header */}
-        <div className="text-center mb-16">
+    <section className="w-full bg-muted/20 border-y border-border/60">
+      {/* Section Header */}
+      <div className="py-20 pb-12 lg:pb-0">
+        <div className="max-w-7xl mx-auto px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="inline-block"
           >
-            
+
           </motion.div>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -1087,154 +1116,50 @@ export const FeatureShowcase = () => {
             insights and seamless workflow automation
           </motion.p>
         </div>
+      </div>
 
-        {/* Mobile Layout - Expandable Cards */}
-        <div className="lg:hidden space-y-4">
-          {features.map((feature, index) => {
-            const isExpanded = expandedMobile === index;
-            const DemoComponent = feature.component;
+      {/* Mobile Layout - Expandable Cards (unchanged) */}
+      <div className="lg:hidden px-6 pb-20 max-w-7xl mx-auto space-y-4">
+        {features.map((feature, index) => {
+          const isExpanded = expandedMobile === index;
+          const DemoComponent = feature.component;
 
-            return (
-              <motion.div
-                key={feature.id}
-                ref={(el) => {
-                  mobileCardRefs.current[index] = el;
-                }}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <Card
-                  className={`overflow-hidden transition-all duration-[400ms] ${
-                    isExpanded ? "border border-border/60" : "border border-border/60"
-                  }`}
-                >
-                  {/* Card Header - Always Visible */}
-                  <button
-                    onClick={() => handleMobileCardClick(index)}
-                    className="w-full p-6 text-left"
-                  >
-                    <div className="flex items-start gap-4">
-                      <div
-                        className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-all ${
-                          isExpanded ? "bg-primary" : "bg-muted/30"
-                        }`}
-                      >
-                        <feature.icon
-                          className={`w-6 h-6 ${
-                            isExpanded ? "text-white" : "text-foreground/60"
-                          }`}
-                        />
-                      </div>
-                      <div className="flex-1">
-                        <h3
-                          className={`text-xl font-semibold mb-2 ${
-                            isExpanded ? "text-foreground" : "text-foreground/80"
-                          }`}
-                        >
-                          {feature.title}
-                        </h3>
-                        <p className="text-muted-foreground leading-relaxed">
-                          {feature.description}
-                        </p>
-                      </div>
-                      <motion.div
-                        animate={{ rotate: isExpanded ? 180 : 0 }}
-                        transition={{ duration: 0.4 }}
-                        className="flex-shrink-0"
-                      >
-                        <ChevronRight
-                          className={`w-6 h-6 transform rotate-90 ${
-                            isExpanded ? "text-muted-foreground" : "text-muted-foreground"
-                          }`}
-                        />
-                      </motion.div>
-                    </div>
-                  </button>
-
-                  {/* Expandable Demo */}
-                  <AnimatePresence>
-                    {isExpanded && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.4, ease: "easeInOut" }}
-                        className="overflow-hidden"
-                      >
-                        <div className="border-t border-border/60">
-                          <DemoComponent />
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </Card>
-              </motion.div>
-            );
-          })}
-        </div>
-
-        {/* Desktop Layout - Split Screen */}
-        <div className="hidden lg:grid lg:grid-cols-2 gap-12 items-start">
-          {/* Left Column - Sticky Demo */}
-          <div className="lg:sticky lg:top-24">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeFeature}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.3 }}
-                className="rounded-2xl overflow-hidden border border-border/60 bg-background"
-              >
-                <ActiveDemoComponent />
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          {/* Right Column - Scrollable Features */}
-          <div ref={containerRef} className="space-y-8">
-            {features.map((feature, index) => (
-              <motion.div
-                key={feature.id}
-                ref={(el) => {
-                  featureRefs.current[index] = el;
-                }}
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ delay: index * 0.1 }}
-                onClick={() => setActiveFeature(index)}
-                className={`cursor-pointer transition-all duration-300 ${
-                  activeFeature === index ? "opacity-100" : "opacity-70 hover:opacity-100"
+          return (
+            <motion.div
+              key={feature.id}
+              ref={(el) => {
+                mobileCardRefs.current[index] = el;
+              }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+            >
+              <Card
+                className={`overflow-hidden transition-all duration-[400ms] ${
+                  isExpanded ? "border border-border/60" : "border border-border/60"
                 }`}
               >
-                <Card
-                  className={`p-8 ${
-                    activeFeature === index
-                      ? "border border-border/60"
-                      : "border border-border/60 hover:border-border/80"
-                  }`}
+                <button
+                  onClick={() => handleMobileCardClick(index)}
+                  className="w-full p-6 text-left"
                 >
                   <div className="flex items-start gap-4">
                     <div
-                      className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                        activeFeature === index ? "bg-primary" : "bg-muted/30"
+                      className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-all ${
+                        isExpanded ? "bg-primary" : "bg-muted/30"
                       }`}
                     >
                       <feature.icon
                         className={`w-6 h-6 ${
-                          activeFeature === index
-                            ? "text-white"
-                            : "text-foreground/60"
+                          isExpanded ? "text-white" : "text-foreground/60"
                         }`}
                       />
                     </div>
                     <div className="flex-1">
                       <h3
                         className={`text-xl font-semibold mb-2 ${
-                          activeFeature === index ? "text-foreground" : "text-foreground/80"
+                          isExpanded ? "text-foreground" : "text-foreground/80"
                         }`}
                       >
                         {feature.title}
@@ -1242,18 +1167,149 @@ export const FeatureShowcase = () => {
                       <p className="text-muted-foreground leading-relaxed">
                         {feature.description}
                       </p>
-                      {activeFeature === index && (
-                        <motion.div
-                          initial={{ width: 0 }}
-                          animate={{ width: "100%" }}
-                          className="h-px bg-border/80 rounded-full mt-4"
-                        />
-                      )}
                     </div>
+                    <motion.div
+                      animate={{ rotate: isExpanded ? 180 : 0 }}
+                      transition={{ duration: 0.4 }}
+                      className="flex-shrink-0"
+                    >
+                      <ChevronRight
+                        className={`w-6 h-6 transform rotate-90 ${
+                          isExpanded ? "text-muted-foreground" : "text-muted-foreground"
+                        }`}
+                      />
+                    </motion.div>
                   </div>
-                </Card>
-              </motion.div>
-            ))}
+                </button>
+
+                <AnimatePresence>
+                  {isExpanded && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.4, ease: "easeInOut" }}
+                      className="overflow-hidden"
+                    >
+                      <div className="border-t border-border/60">
+                        <DemoComponent />
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </Card>
+            </motion.div>
+          );
+        })}
+      </div>
+
+      {/* Desktop Layout - Scroll-Pinned */}
+      <div
+        ref={scrollSectionRef}
+        data-scroll-pin
+        className="hidden lg:block"
+        style={{ height: `${features.length * 100}vh` }}
+      >
+        <div className="sticky top-0 h-screen flex flex-col overflow-hidden">
+          {/* Horizontal Tab Bar */}
+          <div className="flex-shrink-0 pt-8 pb-4">
+            <div className="max-w-7xl mx-auto px-6">
+              <div className="flex items-center justify-center gap-2">
+                {features.map((feature, index) => (
+                  <button
+                    key={feature.id}
+                    onClick={() => handleTabClick(index)}
+                    className="relative px-5 py-2.5 text-sm font-medium rounded-full transition-colors"
+                  >
+                    {activeFeature === index && (
+                      <motion.div
+                        layoutId="activeTab"
+                        className="absolute inset-0 bg-primary rounded-full"
+                        transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                      />
+                    )}
+                    <span
+                      className={`relative z-10 flex items-center gap-2 ${
+                        activeFeature === index
+                          ? "text-primary-foreground"
+                          : "text-muted-foreground hover:text-foreground"
+                      }`}
+                    >
+                      <feature.icon className="w-4 h-4" />
+                      {feature.title}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Two-column content area */}
+          <div className="flex-1 min-h-0">
+            <div className="max-w-7xl mx-auto px-6 h-full">
+              <div className="grid grid-cols-2 gap-12 items-center h-full">
+                {/* Left: Animated Demo Panel */}
+                <div className="max-h-full overflow-y-auto">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={activeFeature}
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      transition={{ duration: 0.3 }}
+                      className="rounded-2xl overflow-hidden border border-border/60 bg-background"
+                    >
+                      <ActiveDemoComponent />
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+
+                {/* Right: Feature description */}
+                <div>
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={activeFeature}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <div className="flex items-center gap-4 mb-6">
+                        <div className="w-14 h-14 rounded-xl bg-primary flex items-center justify-center">
+                          {(() => {
+                            const IconComp = features[activeFeature].icon;
+                            return <IconComp className="w-7 h-7 text-white" />;
+                          })()}
+                        </div>
+                        <h3 className="text-3xl font-semibold text-foreground">
+                          {features[activeFeature].title}
+                        </h3>
+                      </div>
+                      <p className="text-lg text-muted-foreground leading-relaxed">
+                        {features[activeFeature].description}
+                      </p>
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Progress Dots */}
+          <div className="flex-shrink-0 pb-8 pt-4">
+            <div className="flex items-center justify-center gap-3">
+              {features.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleTabClick(index)}
+                  className={`rounded-full transition-all duration-300 ${
+                    activeFeature === index
+                      ? "w-8 h-3 bg-primary"
+                      : "w-3 h-3 bg-border hover:bg-muted-foreground/50"
+                  }`}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>
