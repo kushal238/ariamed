@@ -1,0 +1,100 @@
+name: PR UI Screenshots
+
+on:
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  ui-snapshots:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      # --- PR branch first (has the script + deps) ---
+      - name: Checkout PR
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      # --- Save the snapshot script so it survives branch switches ---
+      - name: Save snapshot script
+        run: cp scripts/ui-snapshots.js /tmp/ui-snapshots.js
+
+      # --- Base screenshots ---
+      - name: Checkout base source
+        run: git checkout ${{ github.event.pull_request.base.sha }} -- .
+
+      - name: Restore snapshot script
+        run: |
+          mkdir -p scripts
+          cp /tmp/ui-snapshots.js scripts/ui-snapshots.js
+
+      - name: Build base
+        run: npm run build
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: placeholder
+
+      - name: Start base server
+        run: npm run start -- -p 3000 &
+
+      - name: Wait for base
+        run: npx wait-on http://localhost:3000
+
+      - name: Screenshot base
+        run: node scripts/ui-snapshots.js
+        env:
+          OUTPUT_DIR: artifacts/before
+
+      - name: Stop base server
+        run: pkill -f "next start" || true
+
+      # --- PR screenshots ---
+      - name: Checkout PR source
+        run: git checkout ${{ github.event.pull_request.head.sha }} -- .
+
+      - name: Install deps (PR)
+        run: npm ci
+
+      - name: Build PR
+        run: npm run build
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: placeholder
+
+      - name: Start PR server
+        run: npm run start -- -p 3000 &
+
+      - name: Wait for PR
+        run: npx wait-on http://localhost:3000
+
+      - name: Screenshot PR
+        run: node scripts/ui-snapshots.js
+        env:
+          OUTPUT_DIR: artifacts/after
+
+      - name: Diff screenshots
+        run: node scripts/ui-snapshots.js --diff
+        env:
+          BEFORE_DIR: artifacts/before
+          OUTPUT_DIR: artifacts/after
+          DIFF_DIR: artifacts/diff
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ui-screenshots
+          path: artifacts
