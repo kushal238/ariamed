@@ -25,16 +25,18 @@ function slug(route) {
 async function screenshotAll() {
   ensureDir(outDir);
   const browser = await chromium.launch();
-  const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
+  try {
+    const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
 
-  for (const route of routes) {
-    const url = baseUrl + route;
-    await page.goto(url, { waitUntil: 'networkidle' });
-    const file = path.join(outDir, `${slug(route)}.png`);
-    await page.screenshot({ path: file, fullPage: true });
+    for (const route of routes) {
+      const url = baseUrl + route;
+      await page.goto(url, { waitUntil: 'networkidle' });
+      const file = path.join(outDir, `${slug(route)}.png`);
+      await page.screenshot({ path: file, fullPage: true });
+    }
+  } finally {
+    await browser.close();
   }
-
-  await browser.close();
 }
 
 function diffAll() {
@@ -48,14 +50,23 @@ function diffAll() {
     const img1 = PNG.sync.read(fs.readFileSync(beforePath));
     const img2 = PNG.sync.read(fs.readFileSync(afterPath));
     const { width, height } = img1;
+
+    if (width !== img2.width || height !== img2.height) {
+      console.warn(`Image dimensions mismatch for ${name}. Copying new image to diff.`);
+      fs.writeFileSync(path.join(diffDir, name), fs.readFileSync(afterPath));
+      continue;
+    }
+
     const diff = new PNG({ width, height });
     pixelmatch(img1.data, img2.data, diff.data, width, height, { threshold: 0.1 });
     fs.writeFileSync(path.join(diffDir, name), PNG.sync.write(diff));
   }
 }
 
-if (process.argv.includes('--diff')) {
-  diffAll();
-} else {
-  screenshotAll();
-}
+(async () => {
+  if (process.argv.includes('--diff')) {
+    diffAll();
+  } else {
+    await screenshotAll();
+  }
+})();

@@ -9,6 +9,10 @@ if (!supabaseUrl || !supabaseAnonKey) {
   console.error('Missing Supabase environment variables');
 }
 
-// Fallback to empty string to prevent app crash on load if env vars are missing
-export const supabase = createClient(supabaseUrl || '', supabaseAnonKey || '');
+// Use a placeholder URL when env vars are missing (e.g. during static generation at build time).
+// Actual Supabase calls only happen client-side where real env vars are available.
+export const supabase = createClient(
+  supabaseUrl || 'https://placeholder.supabase.co',
+  supabaseAnonKey || 'placeholder',
+);
 
