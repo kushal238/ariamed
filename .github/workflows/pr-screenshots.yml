@@ -10,10 +10,12 @@ jobs:
     timeout-minutes: 30
 
     steps:
-      - name: Checkout base
+      # --- PR branch first (has the script + deps) ---
+      - name: Checkout PR
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.base.sha }}
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -26,6 +28,19 @@ jobs:
 
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
+
+      # --- Save the snapshot script so it survives branch switches ---
+      - name: Save snapshot script
+        run: cp scripts/ui-snapshots.js /tmp/ui-snapshots.js
+
+      # --- Base screenshots ---
+      - name: Checkout base source
+        run: git checkout ${{ github.event.pull_request.base.sha }} -- .
+
+      - name: Restore snapshot script
+        run: |
+          mkdir -p scripts
+          cp /tmp/ui-snapshots.js scripts/ui-snapshots.js
 
       - name: Build base
         run: npm run build
@@ -47,10 +62,9 @@ jobs:
       - name: Stop base server
         run: pkill -f "next start" || true
 
-      - name: Checkout PR
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
+      # --- PR screenshots ---
+      - name: Checkout PR source
+        run: git checkout ${{ github.event.pull_request.head.sha }} -- .
 
       - name: Install deps (PR)
         run: npm ci
