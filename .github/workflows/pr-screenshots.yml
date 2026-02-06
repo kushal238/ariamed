@@ -29,6 +29,9 @@ jobs:
 
       - name: Build base
         run: npm run build
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: placeholder
 
       - name: Start base server
         run: npm run start -- -p 3000 &
@@ -54,6 +57,9 @@ jobs:
 
       - name: Build PR
         run: npm run build
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: placeholder
 
       - name: Start PR server
         run: npm run start -- -p 3000 &
