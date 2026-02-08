@@ -19,8 +19,10 @@ import {
 import { Card } from "./ui/card";
 import { Badge } from "./ui/badge";
 
+type DemoComponentProps = { compact?: boolean; isActive?: boolean };
+
 // Smart Dictation Demo Component
-const SmartDictationDemo = ({ compact, isActive }: { compact?: boolean; isActive?: boolean }) => {
+const SmartDictationDemo = ({ compact, isActive }: DemoComponentProps) => {
   const [text, setText] = useState("");
   const [highlights, setHighlights] = useState<
     { text: string; type: "medication" | "symptom" }[]
@@ -186,7 +188,7 @@ const SmartDictationDemo = ({ compact, isActive }: { compact?: boolean; isActive
 };
 
 // Smart Medication Search Demo Component
-const SmartMedicationSearchDemo = ({ compact, isActive }: { compact?: boolean; isActive?: boolean }) => {
+const SmartMedicationSearchDemo = ({ compact, isActive }: DemoComponentProps) => {
   const [medicationInput, setMedicationInput] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedMedication, setSelectedMedication] = useState("");
@@ -395,7 +397,7 @@ const SmartMedicationSearchDemo = ({ compact, isActive }: { compact?: boolean; i
 };
 
 // Aggregated History Demo Component
-const AggregatedHistoryDemo = ({ compact, isActive }: { compact?: boolean; isActive?: boolean }) => {
+const AggregatedHistoryDemo = ({ compact, isActive }: DemoComponentProps) => {
   // Static timeline items - always visible
   const items = [
     { id: 1, type: "Prescription", date: "Dec 15, 2025" },
@@ -406,14 +408,17 @@ const AggregatedHistoryDemo = ({ compact, isActive }: { compact?: boolean; isAct
   ];
 
   const [expandedId, setExpandedId] = useState<number | null>(null);
+  const [tappedId, setTappedId] = useState<number | null>(null);
 
-  // Animation: only expand/collapse the first prescription
+  // Animation: tap then expand/collapse the first prescription
   useEffect(() => {
     if (isActive === false) {
       setExpandedId(null);
+      setTappedId(null);
       return;
     }
 
+    let tapTimeoutId: NodeJS.Timeout | null = null;
     let expandTimeoutId: NodeJS.Timeout | null = null;
     let collapseTimeoutId: NodeJS.Timeout | null = null;
     let resetTimeoutId: NodeJS.Timeout | null = null;
@@ -422,23 +427,28 @@ const AggregatedHistoryDemo = ({ compact, isActive }: { compact?: boolean; isAct
     const runAnimation = () => {
       if (isCleanedUp) return;
 
-      // Expand first prescription after 1 second
-      expandTimeoutId = setTimeout(() => {
-        if (!isCleanedUp) {
+      // Simulate tap on first prescription after 1 second
+      tapTimeoutId = setTimeout(() => {
+        if (isCleanedUp) return;
+        setTappedId(1);
+
+        // Expand after brief tap animation
+        expandTimeoutId = setTimeout(() => {
+          if (isCleanedUp) return;
+          setTappedId(null);
           setExpandedId(1);
-          
+
           // Collapse after 4 seconds
           collapseTimeoutId = setTimeout(() => {
-            if (!isCleanedUp) {
-              setExpandedId(null);
-              
-              // Wait 2 seconds, then repeat
-              resetTimeoutId = setTimeout(() => {
-                if (!isCleanedUp) runAnimation();
-              }, 2000);
-            }
+            if (isCleanedUp) return;
+            setExpandedId(null);
+
+            // Wait 2 seconds, then repeat
+            resetTimeoutId = setTimeout(() => {
+              if (!isCleanedUp) runAnimation();
+            }, 2000);
           }, 4000);
-        }
+        }, 300);
       }, 1000);
     };
 
@@ -446,6 +456,7 @@ const AggregatedHistoryDemo = ({ compact, isActive }: { compact?: boolean; isAct
 
     return () => {
       isCleanedUp = true;
+      if (tapTimeoutId) clearTimeout(tapTimeoutId);
       if (expandTimeoutId) clearTimeout(expandTimeoutId);
       if (collapseTimeoutId) clearTimeout(collapseTimeoutId);
       if (resetTimeoutId) clearTimeout(resetTimeoutId);
@@ -511,7 +522,8 @@ const AggregatedHistoryDemo = ({ compact, isActive }: { compact?: boolean; isAct
           <div className={compact ? "space-y-2" : "space-y-4 md:space-y-6"}>
             {(compact ? items.slice(0, 3) : items).map((item) => {
               const isExpanded = expandedId === item.id;
-              
+              const isTapped = tappedId === item.id;
+
               return (
                 <div
                   key={item.id}
@@ -523,9 +535,9 @@ const AggregatedHistoryDemo = ({ compact, isActive }: { compact?: boolean; isAct
                   {/* Card */}
                   <motion.div
                     animate={{
-                      scale: isExpanded ? 1.01 : 1
+                      scale: isTapped ? 0.95 : isExpanded ? 1.01 : 1
                     }}
-                    transition={{ duration: 0.3 }}
+                    transition={{ duration: isTapped ? 0.15 : 0.3 }}
                     className={`flex-1 bg-card border rounded-lg md:rounded-xl p-3 md:p-4 transition-all ${
                       isExpanded ? "border-border/80 bg-muted/20" : "border-border/60"
                     }`}
@@ -598,7 +610,7 @@ const AggregatedHistoryDemo = ({ compact, isActive }: { compact?: boolean; isAct
 };
 
 // Complaint-Based AI Diagnosis Demo Component
-const ComplaintBasedDiagnosisDemo = ({ compact, isActive }: { compact?: boolean; isActive?: boolean }) => {
+const ComplaintBasedDiagnosisDemo = ({ compact, isActive }: DemoComponentProps) => {
   const [complaints, setComplaints] = useState("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [showDiagnosis, setShowDiagnosis] = useState(false);
@@ -812,7 +824,7 @@ const ComplaintBasedDiagnosisDemo = ({ compact, isActive }: { compact?: boolean;
 };
 
 // Patient RAG Chatbot Demo Component
-const PatientRAGChatbotDemo = ({ compact, isActive }: { compact?: boolean; isActive?: boolean }) => {
+const PatientRAGChatbotDemo = ({ compact, isActive }: DemoComponentProps) => {
   const [messages, setMessages] = useState<{ role: "doctor" | "ai"; text: string }[]>([]);
   const [currentTyping, setCurrentTyping] = useState("");
   const [isAITyping, setIsAITyping] = useState(false);
@@ -1018,7 +1030,7 @@ interface Feature {
   title: string;
   description: string;
   icon: React.ComponentType<{ className?: string }>;
-  component: React.ComponentType<{ compact?: boolean; isActive?: boolean }>;
+  component: React.ComponentType<DemoComponentProps>;
 }
 
 const features: Feature[] = [
@@ -1192,7 +1204,7 @@ export const FeatureShowcase = () => {
               const DemoComponent = feature.component;
               return (
                 <div key={feature.id} className="snap-center min-w-full w-full flex-shrink-0 px-4">
-                  <div className="h-[480px] overflow-hidden rounded-2xl border border-border/60 bg-background">
+                  <div className="h-[480px] overflow-y-auto rounded-2xl border border-border/60 bg-background">
                     <DemoComponent compact isActive={index === mobileActive} />
                   </div>
                 </div>
@@ -1225,8 +1237,10 @@ export const FeatureShowcase = () => {
         <div className="flex items-center justify-center gap-2 pt-4">
           {features.map((_, index) => (
             <button
+              type="button"
               key={index}
               onClick={() => scrollToSlide(index)}
+              aria-label={`Go to slide ${index + 1}`}
               className={`rounded-full transition-all duration-300 ${
                 mobileActive === index
                   ? "w-6 h-2.5 bg-primary"
@@ -1340,8 +1354,10 @@ export const FeatureShowcase = () => {
             <div className="flex items-center justify-center gap-3">
               {features.map((_, index) => (
                 <button
+                  type="button"
                   key={index}
                   onClick={() => handleTabClick(index)}
+                  aria-label={`Go to feature ${index + 1}`}
                   className={`rounded-full transition-all duration-300 ${
                     activeFeature === index
                       ? "w-8 h-3 bg-primary"
