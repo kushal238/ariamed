@@ -13,13 +13,14 @@ import {
   CheckCircle2,
   Sparkles,
   TrendingUp,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { Card } from "./ui/card";
 import { Badge } from "./ui/badge";
-import { ChevronRight } from "lucide-react";
 
 // Smart Dictation Demo Component
-const SmartDictationDemo = () => {
+const SmartDictationDemo = ({ compact, isActive }: { compact?: boolean; isActive?: boolean }) => {
   const [text, setText] = useState("");
   const [highlights, setHighlights] = useState<
     { text: string; type: "medication" | "symptom" }[]
@@ -29,6 +30,12 @@ const SmartDictationDemo = () => {
     "Patient complains of fever and headache for 3 days. Prescribing Paracetamol 500mg and Cetirizine 10mg for symptom relief.";
 
   useEffect(() => {
+    if (isActive === false) {
+      setText("");
+      setHighlights([]);
+      return;
+    }
+
     let currentIndex = 0;
     const interval = setInterval(() => {
       if (currentIndex < fullText.length) {
@@ -61,7 +68,7 @@ const SmartDictationDemo = () => {
     }, 50);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [isActive]);
 
   const renderHighlightedText = (inputText: string) => {
     const result = inputText;
@@ -116,23 +123,25 @@ const SmartDictationDemo = () => {
   };
 
   return (
-    <div className="w-full h-full flex items-center justify-center p-4 md:p-8">
-      <Card className="w-full max-w-full md:max-w-2xl p-4 md:p-8 border border-border/60">
-        <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
-          <motion.div
-            animate={{ scale: [1, 1.1, 1] }}
-            transition={{ repeat: Infinity, duration: 2 }}
-            className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-primary flex items-center justify-center flex-shrink-0"
-          >
-            <Mic className="w-5 h-5 md:w-6 md:h-6 text-white" />
-          </motion.div>
-          <div className="min-w-0 flex-1">
-            <h3 className="font-bold text-lg md:text-xl">Medical Voice Dictation</h3>
-            <p className="text-xs md:text-sm text-muted-foreground">
-              Real-time prescription writing
-            </p>
+    <div className={`w-full h-full flex items-center justify-center ${compact ? "p-2" : "p-4 md:p-8"}`}>
+      <Card className={`w-full max-w-full md:max-w-2xl border border-border/60 ${compact ? "p-3" : "p-4 md:p-8"}`}>
+        {!compact && (
+          <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
+            <motion.div
+              animate={{ scale: [1, 1.1, 1] }}
+              transition={{ repeat: Infinity, duration: 2 }}
+              className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-primary flex items-center justify-center flex-shrink-0"
+            >
+              <Mic className="w-5 h-5 md:w-6 md:h-6 text-white" />
+            </motion.div>
+            <div className="min-w-0 flex-1">
+              <h3 className="font-bold text-lg md:text-xl">Medical Voice Dictation</h3>
+              <p className="text-xs md:text-sm text-muted-foreground">
+                Real-time prescription writing
+              </p>
+            </div>
           </div>
-        </div>
+        )}
 
         <div className="bg-muted/20 rounded-xl p-4 md:p-6 min-h-[180px] md:min-h-[200px] border border-border/60">
           <p className="text-foreground leading-relaxed text-sm md:text-base">
@@ -177,7 +186,7 @@ const SmartDictationDemo = () => {
 };
 
 // Smart Medication Search Demo Component
-const SmartMedicationSearchDemo = () => {
+const SmartMedicationSearchDemo = ({ compact, isActive }: { compact?: boolean; isActive?: boolean }) => {
   const [medicationInput, setMedicationInput] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedMedication, setSelectedMedication] = useState("");
@@ -197,6 +206,14 @@ const SmartMedicationSearchDemo = () => {
   ];
 
   useEffect(() => {
+    if (isActive === false) {
+      setCurrentCycle(0);
+      setMedicationInput("");
+      setShowDropdown(false);
+      setSelectedMedication("");
+      return;
+    }
+
     let typingTimeout: NodeJS.Timeout | null = null;
     let dropdownTimeout: NodeJS.Timeout | null = null;
     let selectionTimeout: NodeJS.Timeout | null = null;
@@ -258,7 +275,7 @@ const SmartMedicationSearchDemo = () => {
       if (loopTimeout) clearTimeout(loopTimeout);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentCycle]);
+  }, [currentCycle, isActive]);
 
   // Determine which options to show based on current input
   const displayOptions = medicationInput.startsWith("croc") 
@@ -268,19 +285,21 @@ const SmartMedicationSearchDemo = () => {
     : crocinOptions;
 
   return (
-    <div className="w-full h-full flex items-center justify-center p-4 md:p-8">
-      <Card className="w-full max-w-full md:max-w-2xl p-4 md:p-8 border border-border/60">
-        <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
-          <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-primary flex items-center justify-center flex-shrink-0">
-            <Sparkles className="w-5 h-5 md:w-6 md:h-6 text-white" />
+    <div className={`w-full h-full flex items-center justify-center ${compact ? "p-2" : "p-4 md:p-8"}`}>
+      <Card className={`w-full max-w-full md:max-w-2xl border border-border/60 ${compact ? "p-3" : "p-4 md:p-8"}`}>
+        {!compact && (
+          <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
+            <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-primary flex items-center justify-center flex-shrink-0">
+              <Sparkles className="w-5 h-5 md:w-6 md:h-6 text-white" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <h3 className="font-bold text-lg md:text-xl">Smart Medication Search</h3>
+              <p className="text-xs md:text-sm text-muted-foreground">
+                Instant medication lookup with dosage options
+              </p>
+            </div>
           </div>
-          <div className="min-w-0 flex-1">
-            <h3 className="font-bold text-lg md:text-xl">Smart Medication Search</h3>
-            <p className="text-xs md:text-sm text-muted-foreground">
-              Instant medication lookup with dosage options
-            </p>
-          </div>
-        </div>
+        )}
 
         <div className="bg-muted/20 border border-border/60 rounded-xl p-4 md:p-6">
           <label className="text-xs md:text-sm font-semibold text-foreground mb-2 md:mb-3 block">
@@ -376,7 +395,7 @@ const SmartMedicationSearchDemo = () => {
 };
 
 // Aggregated History Demo Component
-const AggregatedHistoryDemo = () => {
+const AggregatedHistoryDemo = ({ compact, isActive }: { compact?: boolean; isActive?: boolean }) => {
   // Static timeline items - always visible
   const items = [
     { id: 1, type: "Prescription", date: "Dec 15, 2025" },
@@ -390,6 +409,11 @@ const AggregatedHistoryDemo = () => {
 
   // Animation: only expand/collapse the first prescription
   useEffect(() => {
+    if (isActive === false) {
+      setExpandedId(null);
+      return;
+    }
+
     let expandTimeoutId: NodeJS.Timeout | null = null;
     let collapseTimeoutId: NodeJS.Timeout | null = null;
     let resetTimeoutId: NodeJS.Timeout | null = null;
@@ -426,56 +450,66 @@ const AggregatedHistoryDemo = () => {
       if (collapseTimeoutId) clearTimeout(collapseTimeoutId);
       if (resetTimeoutId) clearTimeout(resetTimeoutId);
     };
-  }, []);
+  }, [isActive]);
 
   return (
-    <div className="w-full h-full flex items-center justify-center p-4 md:p-8">
-      <Card className="w-full max-w-full md:max-w-2xl p-4 md:p-8 border border-border/60">
-        <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
-          <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-primary flex items-center justify-center flex-shrink-0">
-            <History className="w-5 h-5 md:w-6 md:h-6 text-white" />
+    <div className={`w-full h-full flex items-center justify-center ${compact ? "p-2" : "p-4 md:p-8"}`}>
+      <Card className={`w-full max-w-full md:max-w-2xl border border-border/60 ${compact ? "p-3" : "p-4 md:p-8"}`}>
+        {!compact && (
+          <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
+            <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-primary flex items-center justify-center flex-shrink-0">
+              <History className="w-5 h-5 md:w-6 md:h-6 text-white" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <h3 className="font-bold text-lg md:text-xl">Complete Patient Timeline</h3>
+              <p className="text-xs md:text-sm text-muted-foreground">
+                All medical records in one view
+              </p>
+            </div>
           </div>
-          <div className="min-w-0 flex-1">
-            <h3 className="font-bold text-lg md:text-xl">Complete Patient Timeline</h3>
-            <p className="text-xs md:text-sm text-muted-foreground">
-              All medical records in one view
-            </p>
-          </div>
-        </div>
+        )}
 
         {/* Patient Info Card */}
-        <div className="bg-muted/20 border border-border/60 rounded-xl p-4 md:p-5 mb-4 md:mb-6">
-          <div className="flex items-start justify-between mb-3">
+        <div className={`bg-muted/20 border border-border/60 rounded-xl ${compact ? "p-2.5 mb-2" : "p-4 md:p-5 mb-4 md:mb-6"}`}>
+          <div className={`flex items-start justify-between ${compact ? "mb-1.5" : "mb-3"}`}>
             <div className="min-w-0 flex-1 mr-2">
               <h4 className="font-bold text-base md:text-lg">Sarah Johnson</h4>
               <p className="text-xs md:text-sm text-muted-foreground">Female, 42 years • ID: #MR-4521</p>
             </div>
             <Badge variant="outline" className="text-xs font-medium flex-shrink-0">Active Patient</Badge>
           </div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 md:gap-3 text-xs md:text-sm">
-            <div className="bg-background rounded-lg p-2 md:p-3 border border-border/60">
-              <p className="text-muted-foreground font-medium mb-1 text-xs">Conditions</p>
-              <p className="font-semibold text-xs">Hypertension</p>
+
+          {compact ? (
+            <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-muted-foreground">
+              <span><span className="font-medium text-foreground">Hypertension</span></span>
+              <span>Allergy: <span className="font-medium text-foreground">Penicillin</span></span>
+              <span>Meds: <span className="font-medium text-foreground">Lisinopril 10mg</span></span>
             </div>
-            <div className="bg-background rounded-lg p-2 md:p-3 border border-border/60">
-              <p className="text-muted-foreground font-medium mb-1 text-xs">Allergies</p>
-              <p className="font-semibold text-xs">Penicillin</p>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 md:gap-3 text-xs md:text-sm">
+              <div className="bg-background rounded-lg p-2 md:p-3 border border-border/60">
+                <p className="text-muted-foreground font-medium mb-1 text-xs">Conditions</p>
+                <p className="font-semibold text-xs">Hypertension</p>
+              </div>
+              <div className="bg-background rounded-lg p-2 md:p-3 border border-border/60">
+                <p className="text-muted-foreground font-medium mb-1 text-xs">Allergies</p>
+                <p className="font-semibold text-xs">Penicillin</p>
+              </div>
+              <div className="bg-background rounded-lg p-2 md:p-3 border border-border/60">
+                <p className="text-muted-foreground font-medium mb-1 text-xs">Active Meds</p>
+                <p className="font-semibold text-xs">Lisinopril 10mg</p>
+              </div>
             </div>
-            <div className="bg-background rounded-lg p-2 md:p-3 border border-border/60">
-              <p className="text-muted-foreground font-medium mb-1 text-xs">Active Meds</p>
-              <p className="font-semibold text-xs">Lisinopril 10mg</p>
-            </div>
-          </div>
+          )}
         </div>
 
-        <div className="relative bg-muted/20 rounded-xl p-4 md:p-6 border border-border/60">
+        <div className={`relative bg-muted/20 rounded-xl ${compact ? "p-3" : "p-4 md:p-6"} border border-border/60`}>
           {/* Timeline line */}
-          <div className="absolute left-8 md:left-10 top-6 bottom-6 w-0.5 bg-border/70" />
+          <div className={`absolute ${compact ? "left-6" : "left-8 md:left-10"} top-6 bottom-6 w-0.5 bg-border/70`} />
 
           {/* Timeline items */}
-          <div className="space-y-4 md:space-y-6">
-            {items.map((item) => {
+          <div className={compact ? "space-y-2" : "space-y-4 md:space-y-6"}>
+            {(compact ? items.slice(0, 3) : items).map((item) => {
               const isExpanded = expandedId === item.id;
               
               return (
@@ -564,7 +598,7 @@ const AggregatedHistoryDemo = () => {
 };
 
 // Complaint-Based AI Diagnosis Demo Component
-const ComplaintBasedDiagnosisDemo = () => {
+const ComplaintBasedDiagnosisDemo = ({ compact, isActive }: { compact?: boolean; isActive?: boolean }) => {
   const [complaints, setComplaints] = useState("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [showDiagnosis, setShowDiagnosis] = useState(false);
@@ -585,6 +619,13 @@ const ComplaintBasedDiagnosisDemo = () => {
   ];
 
   useEffect(() => {
+    if (isActive === false) {
+      setComplaints("");
+      setIsAnalyzing(false);
+      setShowDiagnosis(false);
+      return;
+    }
+
     let typingTimeout: NodeJS.Timeout | null = null;
     let analyzeTimeout: NodeJS.Timeout | null = null;
     let diagnosisTimeout: NodeJS.Timeout | null = null;
@@ -649,22 +690,24 @@ const ComplaintBasedDiagnosisDemo = () => {
       if (resetTimeout) clearTimeout(resetTimeout);
       if (loopTimeout) clearTimeout(loopTimeout);
     };
-  }, []);
+  }, [isActive]);
 
   return (
-    <div className="w-full h-full flex items-center justify-center p-4 md:p-8">
-      <Card className="w-full max-w-full md:max-w-2xl p-4 md:p-8 border border-border/60">
-        <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
-          <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-primary flex items-center justify-center flex-shrink-0">
-            <Brain className="w-5 h-5 md:w-6 md:h-6 text-white" />
+    <div className={`w-full h-full flex items-center justify-center ${compact ? "p-2" : "p-4 md:p-8"}`}>
+      <Card className={`w-full max-w-full md:max-w-2xl border border-border/60 ${compact ? "p-3" : "p-4 md:p-8"}`}>
+        {!compact && (
+          <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
+            <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-primary flex items-center justify-center flex-shrink-0">
+              <Brain className="w-5 h-5 md:w-6 md:h-6 text-white" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <h3 className="font-bold text-lg md:text-xl">AI-Aided Diagnosis</h3>
+              <p className="text-xs md:text-sm text-muted-foreground">
+                Intelligent diagnosis based on complaints + patient history
+              </p>
+            </div>
           </div>
-          <div className="min-w-0 flex-1">
-            <h3 className="font-bold text-lg md:text-xl">AI-Aided Diagnosis</h3>
-            <p className="text-xs md:text-sm text-muted-foreground">
-              Intelligent diagnosis based on complaints + patient history
-            </p>
-          </div>
-        </div>
+        )}
 
         {/* Patient Info */}
         <div className="bg-muted/20 border border-border/60 rounded-lg p-3 md:p-4 mb-3 md:mb-4">
@@ -769,7 +812,7 @@ const ComplaintBasedDiagnosisDemo = () => {
 };
 
 // Patient RAG Chatbot Demo Component
-const PatientRAGChatbotDemo = () => {
+const PatientRAGChatbotDemo = ({ compact, isActive }: { compact?: boolean; isActive?: boolean }) => {
   const [messages, setMessages] = useState<{ role: "doctor" | "ai"; text: string }[]>([]);
   const [currentTyping, setCurrentTyping] = useState("");
   const [isAITyping, setIsAITyping] = useState(false);
@@ -786,6 +829,13 @@ const PatientRAGChatbotDemo = () => {
   ];
 
   useEffect(() => {
+    if (isActive === false) {
+      setMessages([]);
+      setCurrentTyping("");
+      setIsAITyping(false);
+      return;
+    }
+
     const timeouts: NodeJS.Timeout[] = [];
     const intervals: NodeJS.Timeout[] = [];
     let isCleanedUp = false;
@@ -862,22 +912,24 @@ const PatientRAGChatbotDemo = () => {
       intervals.forEach(interval => clearInterval(interval));
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isActive]);
 
   return (
-    <div className="w-full h-full flex items-center justify-center p-4 md:p-8">
-      <Card className="w-full max-w-full md:max-w-2xl p-4 md:p-8 border border-border/60">
-        <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
-          <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-primary flex items-center justify-center flex-shrink-0">
-            <Sparkles className="w-5 h-5 md:w-6 md:h-6 text-white" />
+    <div className={`w-full h-full flex items-center justify-center ${compact ? "p-2" : "p-4 md:p-8"}`}>
+      <Card className={`w-full max-w-full md:max-w-2xl border border-border/60 ${compact ? "p-3" : "p-4 md:p-8"}`}>
+        {!compact && (
+          <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
+            <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-primary flex items-center justify-center flex-shrink-0">
+              <Sparkles className="w-5 h-5 md:w-6 md:h-6 text-white" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <h3 className="font-bold text-lg md:text-xl">Patient Health Assistant</h3>
+              <p className="text-xs md:text-sm text-muted-foreground">
+                RAG-powered chatbot for instant patient information
+              </p>
+            </div>
           </div>
-          <div className="min-w-0 flex-1">
-            <h3 className="font-bold text-lg md:text-xl">Patient Health Assistant</h3>
-            <p className="text-xs md:text-sm text-muted-foreground">
-              RAG-powered chatbot for instant patient information
-            </p>
-          </div>
-        </div>
+        )}
 
         {/* Chat Interface */}
         <div className="bg-muted/20 border border-border/60 rounded-xl p-4 md:p-6 min-h-[350px] md:min-h-[400px]">
@@ -966,7 +1018,7 @@ interface Feature {
   title: string;
   description: string;
   icon: React.ComponentType<{ className?: string }>;
-  component: React.ComponentType;
+  component: React.ComponentType<{ compact?: boolean; isActive?: boolean }>;
 }
 
 const features: Feature[] = [
@@ -1014,11 +1066,8 @@ const features: Feature[] = [
 
 export const FeatureShowcase = () => {
   const [activeFeature, setActiveFeature] = useState(0);
-  const [expandedMobile, setExpandedMobile] = useState<number | null>(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const mobileCardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  // Desktop scroll-driven refs
+  // Desktop: scroll-driven refs
   const scrollSectionRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: scrollSectionRef,
@@ -1035,7 +1084,7 @@ export const FeatureShowcase = () => {
     setActiveFeature(index);
   });
 
-  // Click a tab → smooth-scroll to that feature's scroll position
+  // Desktop: click a tab → smooth-scroll to that feature's scroll position
   const handleTabClick = useCallback((index: number) => {
     if (!scrollSectionRef.current) return;
     const section = scrollSectionRef.current;
@@ -1046,46 +1095,30 @@ export const FeatureShowcase = () => {
     window.scrollTo({ top: targetScroll, behavior: "smooth" });
   }, []);
 
-  const ActiveDemoComponent = features[activeFeature].component;
+  // Mobile: carousel state
+  const [mobileActive, setMobileActive] = useState(0);
+  const carouselRef = useRef<HTMLDivElement>(null);
 
-  const handleMobileCardClick = (index: number) => {
-    if (isTransitioning) return;
+  const handleCarouselScroll = useCallback(() => {
+    const el = carouselRef.current;
+    if (!el) return;
+    const index = Math.min(
+      features.length - 1,
+      Math.max(0, Math.round(el.scrollLeft / el.clientWidth))
+    );
+    setMobileActive(index);
+  }, []);
 
-    if (expandedMobile === index) {
-      setExpandedMobile(null);
-      return;
-    }
-
-    if (expandedMobile === null) {
-      setExpandedMobile(index);
-      setTimeout(() => {
-        mobileCardRefs.current[index]?.scrollIntoView({
-          behavior: 'smooth',
-          block: 'center',
-        });
-      }, 50);
-      return;
-    }
-
-    setIsTransitioning(true);
-    setExpandedMobile(null);
-
-    setTimeout(() => {
-      mobileCardRefs.current[index]?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-      });
-      setTimeout(() => {
-        setExpandedMobile(index);
-        setIsTransitioning(false);
-      }, 300);
-    }, 400);
-  };
+  const scrollToSlide = useCallback((index: number) => {
+    const el = carouselRef.current;
+    if (!el) return;
+    el.scrollTo({ left: index * el.clientWidth, behavior: "smooth" });
+  }, []);
 
   return (
-    <section className="w-full bg-muted/20 border-y border-border/60">
+    <section className="w-full bg-muted border-y border-border/60">
       {/* Section Header */}
-      <div className="py-20 pb-12 lg:pb-0">
+      <div className="py-20 pb-0">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -1118,108 +1151,112 @@ export const FeatureShowcase = () => {
         </div>
       </div>
 
-      {/* Mobile Layout - Expandable Cards (unchanged) */}
-      <div className="lg:hidden px-6 pb-20 max-w-7xl mx-auto space-y-4">
-        {features.map((feature, index) => {
-          const isExpanded = expandedMobile === index;
-          const DemoComponent = feature.component;
-
-          return (
+      {/* Mobile: Instagram-style swipeable carousel (<lg) */}
+      <div className="lg:hidden py-8">
+        {/* Feature info - updates on swipe */}
+        <div className="px-4 mb-4">
+          <AnimatePresence mode="wait">
             <motion.div
-              key={feature.id}
-              ref={(el) => {
-                mobileCardRefs.current[index] = el;
-              }}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
+              key={mobileActive}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.2 }}
             >
-              <Card
-                className={`overflow-hidden transition-all duration-[400ms] ${
-                  isExpanded ? "border border-border/60" : "border border-border/60"
-                }`}
-              >
-                <button
-                  onClick={() => handleMobileCardClick(index)}
-                  className="w-full p-6 text-left"
-                >
-                  <div className="flex items-start gap-4">
-                    <div
-                      className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-all ${
-                        isExpanded ? "bg-primary" : "bg-muted/30"
-                      }`}
-                    >
-                      <feature.icon
-                        className={`w-6 h-6 ${
-                          isExpanded ? "text-white" : "text-foreground/60"
-                        }`}
-                      />
-                    </div>
-                    <div className="flex-1">
-                      <h3
-                        className={`text-xl font-semibold mb-2 ${
-                          isExpanded ? "text-foreground" : "text-foreground/80"
-                        }`}
-                      >
-                        {feature.title}
-                      </h3>
-                      <p className="text-muted-foreground leading-relaxed">
-                        {feature.description}
-                      </p>
-                    </div>
-                    <motion.div
-                      animate={{ rotate: isExpanded ? 180 : 0 }}
-                      transition={{ duration: 0.4 }}
-                      className="flex-shrink-0"
-                    >
-                      <ChevronRight
-                        className={`w-6 h-6 transform rotate-90 ${
-                          isExpanded ? "text-muted-foreground" : "text-muted-foreground"
-                        }`}
-                      />
-                    </motion.div>
-                  </div>
-                </button>
-
-                <AnimatePresence>
-                  {isExpanded && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.4, ease: "easeInOut" }}
-                      className="overflow-hidden"
-                    >
-                      <div className="border-t border-border/60">
-                        <DemoComponent />
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </Card>
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center flex-shrink-0">
+                  {(() => {
+                    const IconComp = features[mobileActive].icon;
+                    return <IconComp className="w-5 h-5 text-white" />;
+                  })()}
+                </div>
+                <h3 className="text-lg font-semibold text-foreground">
+                  {features[mobileActive].title}
+                </h3>
+              </div>
+              <p className="text-sm text-muted-foreground leading-relaxed min-h-[3.5rem]">
+                {features[mobileActive].description}
+              </p>
             </motion.div>
-          );
-        })}
+          </AnimatePresence>
+        </div>
+
+        {/* Demo carousel with navigation arrows */}
+        <div className="relative">
+          <div
+            ref={carouselRef}
+            onScroll={handleCarouselScroll}
+            className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide"
+          >
+            {features.map((feature, index) => {
+              const DemoComponent = feature.component;
+              return (
+                <div key={feature.id} className="snap-center min-w-full w-full flex-shrink-0 px-4">
+                  <div className="h-[480px] overflow-hidden rounded-2xl border border-border/60 bg-background">
+                    <DemoComponent compact isActive={index === mobileActive} />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Navigation arrows */}
+          <button
+            onClick={() => scrollToSlide(mobileActive - 1)}
+            className={`absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-background flex items-center justify-center border border-border shadow-md z-10 ${
+              mobileActive === 0 ? "opacity-30 pointer-events-none" : ""
+            }`}
+            aria-label="Previous feature"
+          >
+            <ChevronLeft className="w-5 h-5 text-foreground" />
+          </button>
+          <button
+            onClick={() => scrollToSlide(mobileActive + 1)}
+            className={`absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-background flex items-center justify-center border border-border shadow-md z-10 ${
+              mobileActive === features.length - 1 ? "opacity-30 pointer-events-none" : ""
+            }`}
+            aria-label="Next feature"
+          >
+            <ChevronRight className="w-5 h-5 text-foreground" />
+          </button>
+        </div>
+
+        {/* Progress dots */}
+        <div className="flex items-center justify-center gap-2 pt-4">
+          {features.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => scrollToSlide(index)}
+              className={`rounded-full transition-all duration-300 ${
+                mobileActive === index
+                  ? "w-6 h-2.5 bg-primary"
+                  : "w-2.5 h-2.5 bg-border hover:bg-muted-foreground/50"
+              }`}
+            />
+          ))}
+        </div>
       </div>
 
-      {/* Desktop Layout - Scroll-Pinned */}
+      {/* Desktop: Scroll-driven sticky layout (>=lg) */}
       <div
         ref={scrollSectionRef}
         data-scroll-pin
         className="hidden lg:block"
         style={{ height: `${features.length * 100}vh` }}
       >
-        <div className="sticky top-0 h-screen flex flex-col overflow-hidden">
-          {/* Horizontal Tab Bar */}
+        <div
+          className="sticky top-0 h-screen flex flex-col overflow-hidden"
+          style={{ height: '100dvh' }}
+        >
+          {/* Tab Bar */}
           <div className="flex-shrink-0 pt-8 pb-4">
             <div className="max-w-7xl mx-auto px-6">
-              <div className="flex items-center justify-center gap-2">
+              <div className="flex gap-2 justify-center">
                 {features.map((feature, index) => (
                   <button
                     key={feature.id}
                     onClick={() => handleTabClick(index)}
-                    className="relative px-5 py-2.5 text-sm font-medium rounded-full transition-colors"
+                    className="relative flex-shrink-0 px-5 py-2.5 text-sm font-medium rounded-full transition-colors"
                   >
                     {activeFeature === index && (
                       <motion.div
@@ -1229,7 +1266,7 @@ export const FeatureShowcase = () => {
                       />
                     )}
                     <span
-                      className={`relative z-10 flex items-center gap-2 ${
+                      className={`relative z-10 flex items-center gap-2 whitespace-nowrap ${
                         activeFeature === index
                           ? "text-primary-foreground"
                           : "text-muted-foreground hover:text-foreground"
@@ -1244,28 +1281,12 @@ export const FeatureShowcase = () => {
             </div>
           </div>
 
-          {/* Two-column content area */}
+          {/* Content Area */}
           <div className="flex-1 min-h-0">
             <div className="max-w-7xl mx-auto px-6 h-full">
-              <div className="grid grid-cols-2 gap-12 items-center h-full">
-                {/* Left: Animated Demo Panel */}
-                <div className="max-h-full overflow-y-auto">
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={activeFeature}
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.95 }}
-                      transition={{ duration: 0.3 }}
-                      className="rounded-2xl overflow-hidden border border-border/60 bg-background"
-                    >
-                      <ActiveDemoComponent />
-                    </motion.div>
-                  </AnimatePresence>
-                </div>
-
-                {/* Right: Feature description */}
-                <div>
+              <div className="h-full grid grid-cols-2 gap-12 items-center">
+                {/* Feature description */}
+                <div className="order-2">
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={activeFeature}
@@ -1275,7 +1296,7 @@ export const FeatureShowcase = () => {
                       transition={{ duration: 0.3 }}
                     >
                       <div className="flex items-center gap-4 mb-6">
-                        <div className="w-14 h-14 rounded-xl bg-primary flex items-center justify-center">
+                        <div className="w-14 h-14 rounded-xl bg-primary flex items-center justify-center flex-shrink-0">
                           {(() => {
                             const IconComp = features[activeFeature].icon;
                             return <IconComp className="w-7 h-7 text-white" />;
@@ -1288,6 +1309,25 @@ export const FeatureShowcase = () => {
                       <p className="text-lg text-muted-foreground leading-relaxed">
                         {features[activeFeature].description}
                       </p>
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+
+                {/* Demo component */}
+                <div className="order-1 max-h-full overflow-y-auto">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={activeFeature}
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      transition={{ duration: 0.3 }}
+                      className="rounded-2xl overflow-hidden border border-border/60 bg-background"
+                    >
+                      {(() => {
+                        const DemoComponent = features[activeFeature].component;
+                        return <DemoComponent />;
+                      })()}
                     </motion.div>
                   </AnimatePresence>
                 </div>
