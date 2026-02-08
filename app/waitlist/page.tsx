@@ -19,7 +19,6 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useToast } from "@/hooks/use-toast";
 import { Navbar } from "@/components/Navbar-nextjs";
 import { Footer } from "@/components/Footer-nextjs";
-import { supabase } from "@/integrations/supabase/client";
 import { PhoneInput } from "@/components/ui/phone-input";
 
 const formSchema = z.object({
@@ -72,26 +71,16 @@ export default function WaitlistPage() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const { customList } = await import("country-codes-list");
-      const callingCodes = customList("countryCode", "+{countryCallingCode}");
-      const callingCode = callingCodes[values.phoneNumberCountryCode as keyof typeof callingCodes] || "";
-      const fullPhoneNumber = `${callingCode} ${values.phoneNumber}`;
-      
-      const { error } = await supabase
-        .from('waitlist')
-        .insert({
-          name: values.name,
-          user_type: values.userType,
-          user_type_other: values.userTypeOther,
-          phone_number: fullPhoneNumber,
-          email: values.email,
-          features: values.features,
-          features_other: values.featuresOther,
-          source: values.source,
-          source_other: values.sourceOther,
-        });
+      const res = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
 
-      if (error) throw error;
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        throw new Error(data?.error || "Request failed");
+      }
 
       toast({
         title: "You're on the list!",
