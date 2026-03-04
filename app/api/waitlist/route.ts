@@ -4,6 +4,16 @@ import { createClient } from "@supabase/supabase-js";
 import { Resend } from "resend";
 import { customList } from "country-codes-list";
 
+// Hoist static objects to module scope to avoid re-creating per request
+const callingCodes = customList(
+  "countryCode",
+  "+{countryCallingCode}",
+) as Record<string, string>;
+
+const resend = process.env.RESEND_API_KEY
+  ? new Resend(process.env.RESEND_API_KEY)
+  : null;
+
 const formSchema = z.object({
   name: z.string().min(1),
   userType: z.enum(["doctor", "patient", "other"]),
@@ -45,26 +55,22 @@ export async function POST(request: Request) {
   const values = parsed.data;
 
   // Build full phone number with country calling code
-  const callingCodes = customList(
-    "countryCode",
-    "+{countryCallingCode}",
-  ) as Record<string, string>;
   const callingCode =
     callingCodes[values.phoneNumberCountryCode] || "";
   const fullPhoneNumber = `${callingCode} ${values.phoneNumber}`;
 
-  // Insert into Supabase
+  // Insert into Supabase using service role key (bypasses RLS for trusted server-side ops)
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
 
-  if (!supabaseUrl || !supabaseAnonKey) {
+  if (!supabaseUrl || !supabaseServiceKey) {
     return NextResponse.json(
       { error: "Server misconfiguration" },
       { status: 500 },
     );
   }
 
-  const supabase = createClient(supabaseUrl, supabaseAnonKey);
+  const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
   const { error: dbError } = await supabase.from("waitlist").insert({
     name: values.name,
@@ -87,12 +93,10 @@ export async function POST(request: Request) {
   }
 
   // Send notification email (non-blocking -- don't fail the signup if email fails)
-  const resendApiKey = process.env.RESEND_API_KEY;
   const notificationEmail = process.env.NOTIFICATION_EMAIL;
 
-  if (resendApiKey && notificationEmail) {
+  if (resend && notificationEmail) {
     try {
-      const resend = new Resend(resendApiKey);
       await resend.emails.send({
         from: "Aria Waitlist <onboarding@resend.dev>",
         to: notificationEmail,
