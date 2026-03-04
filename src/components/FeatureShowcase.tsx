@@ -309,22 +309,20 @@ const SmartMedicationSearchDemo = ({ compact, isActive }: DemoComponentProps) =>
           </label>
           
           {/* Input field */}
-          <div className="relative mb-2">
-            <input
-              type="text"
-              value={medicationInput}
-              readOnly
-              placeholder="Start typing medication name..."
-              className="w-full px-3 md:px-4 py-2 md:py-3 border border-border/70 rounded-lg bg-background focus:outline-none focus:border-border transition-colors text-sm md:text-base font-medium"
-            />
-            
-            {/* Typing cursor */}
-            {medicationInput && medicationInput.length < 10 && !selectedMedication && (
-              <motion.div
-                animate={{ opacity: [1, 0] }}
-                transition={{ repeat: Infinity, duration: 0.8 }}
-                className="absolute right-3 md:right-4 top-1/2 -translate-y-1/2 w-0.5 h-4 md:h-5 bg-foreground/60"
-              />
+          <div className="w-full px-3 md:px-4 py-2 md:py-3 border border-border/70 rounded-lg bg-background transition-colors text-sm md:text-base font-medium mb-2 min-h-[2.5rem] md:min-h-[2.75rem] flex items-center">
+            {medicationInput ? (
+              <span>
+                {medicationInput}
+                {medicationInput.length < 10 && !selectedMedication && (
+                  <motion.span
+                    animate={{ opacity: [1, 0] }}
+                    transition={{ repeat: Infinity, duration: 0.8 }}
+                    className="inline-block w-0.5 h-4 md:h-5 bg-foreground/60 align-middle ml-px"
+                  />
+                )}
+              </span>
+            ) : (
+              <span className="text-muted-foreground">Start typing medication name...</span>
             )}
           </div>
           
@@ -739,19 +737,20 @@ const ComplaintBasedDiagnosisDemo = ({ compact, isActive }: DemoComponentProps) 
           <label className="text-xs md:text-sm font-semibold text-foreground mb-2 md:mb-3 block">
             Chief Complaints
           </label>
-          <div className="relative">
-            <textarea
-              value={complaints}
-              readOnly
-              placeholder="Enter patient complaints..."
-              className="w-full px-3 md:px-4 py-2 md:py-3 border border-border/70 rounded-lg bg-background focus:outline-none focus:border-border transition-colors text-xs md:text-sm min-h-[70px] md:min-h-[80px] resize-none"
-            />
-            {complaints && complaints.length < fullComplaintsText.length && (
-              <motion.div
-                animate={{ opacity: [1, 0] }}
-                transition={{ repeat: Infinity, duration: 0.8 }}
-              className="absolute right-3 md:right-4 bottom-3 md:bottom-4 w-0.5 h-3 md:h-4 bg-foreground/60"
-              />
+          <div className="w-full px-3 md:px-4 py-2 md:py-3 border border-border/70 rounded-lg bg-background transition-colors text-xs md:text-sm min-h-[70px] md:min-h-[80px]">
+            {complaints ? (
+              <span>
+                {complaints}
+                {complaints.length < fullComplaintsText.length && (
+                  <motion.span
+                    animate={{ opacity: [1, 0] }}
+                    transition={{ repeat: Infinity, duration: 0.8 }}
+                    className="inline-block w-0.5 h-3 md:h-4 bg-foreground/60 align-middle ml-px"
+                  />
+                )}
+              </span>
+            ) : (
+              <span className="text-muted-foreground">Enter patient complaints...</span>
             )}
           </div>
         </div>
