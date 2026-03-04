@@ -1128,7 +1128,7 @@ export const FeatureShowcase = () => {
   }, []);
 
   return (
-    <section className="w-full bg-muted border-y border-border/60">
+    <section className="w-full bg-gradient-to-b from-background to-[#F7F9FC] border-b border-border/60">
       {/* Section Header */}
       <div className="py-20 pb-0">
         <div className="max-w-7xl mx-auto px-6 text-center">

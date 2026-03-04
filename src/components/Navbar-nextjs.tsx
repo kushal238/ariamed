@@ -68,7 +68,7 @@ export const Navbar = () => {
 
   return (
     <nav
-      className="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-sm border-b border-border/40 transition-transform duration-200"
+      className="fixed top-0 w-full z-50 bg-background/95 backdrop-blur-sm border-b border-border/40 transition-transform duration-200"
       style={{
         willChange: "transform",
         transform: `translateY(-${scrollOffset}px) translateZ(0)`,
