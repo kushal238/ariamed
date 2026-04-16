@@ -19,7 +19,7 @@ export const Hero = () => {
               <br />
               workflows with
               <br />
-              <span className="text-primary">EMR-integrated AI</span>
+              <span className="text-primary">AI-native EMR system</span>
             </h1>
 
             <p className="text-base sm:text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
