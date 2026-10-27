@@ -1,0 +1,23 @@
+{
+  // Cloudflare Workers config for the ariamed.ai marketing site, built with
+  // the OpenNext adapter (@opennextjs/cloudflare). Fits the Workers Free plan:
+  // pages are prerendered static assets; only /api/waitlist runs in the Worker.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "main": ".open-next/worker.js",
+  "name": "ariamed-site",
+  "compatibility_date": "2026-10-01",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "services": [
+    {
+      "binding": "WORKER_SELF_REFERENCE",
+      "service": "ariamed-site"
+    }
+  ],
+  "observability": {
+    "enabled": true
+  }
+}

@@ -37,3 +37,9 @@ tsconfig.tsbuildinfo
 # Local agent configs
 .agents/
 .claude/
+
+# Cloudflare / OpenNext
+.open-next
+.wrangler
+.dev.vars*
+!.dev.vars.example
