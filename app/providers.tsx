@@ -5,7 +5,6 @@ import { useState } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { Analytics } from "@vercel/analytics/react";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(() => new QueryClient());
@@ -16,7 +15,6 @@ export function Providers({ children }: { children: React.ReactNode }) {
         {children}
         <Toaster />
         <Sonner />
-        <Analytics />
       </TooltipProvider>
     </QueryClientProvider>
   );
