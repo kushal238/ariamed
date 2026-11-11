@@ -7,6 +7,15 @@
   "name": "ariamed-site",
   "compatibility_date": "2026-10-01",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  // Keep the *.workers.dev URL alive alongside the custom domains
+  // (wrangler disables it by default once "routes" is set)
+  "workers_dev": true,
+  // Custom domains: Cloudflare manages DNS records + TLS certs for these hosts.
+  // The apex redirects to www in next.config.mjs.
+  "routes": [
+    { "pattern": "www.ariamed.ai", "custom_domain": true },
+    { "pattern": "ariamed.ai", "custom_domain": true }
+  ],
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS"
