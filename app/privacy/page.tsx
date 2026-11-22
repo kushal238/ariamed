@@ -1,7 +1,7 @@
 "use client";
 
-import { Navbar } from "@/components/Navbar-nextjs";
-import { Footer } from "@/components/Footer-nextjs";
+import { SiteNav } from "@/components/site/SiteNav";
+import { SiteFooter } from "@/components/site/SiteFooter";
 import { useEffect } from "react";
 
 export default function PrivacyPage() {
@@ -11,8 +11,8 @@ export default function PrivacyPage() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <Navbar />
-      <div className="flex-1 container mx-auto px-4 py-32 max-w-4xl">
+      <SiteNav />
+      <div className="flex-1 container mx-auto px-4 py-16 max-w-4xl">
         <div className="prose prose-gray max-w-none dark:prose-invert">
           <h1 className="text-4xl font-bold mb-8">Privacy Policy</h1>
           <p className="text-muted-foreground mb-8">Last updated: {new Date().toLocaleDateString()}</p>
@@ -77,7 +77,7 @@ export default function PrivacyPage() {
           </section>
         </div>
       </div>
-      <Footer />
+      <SiteFooter />
     </div>
   );
 }
