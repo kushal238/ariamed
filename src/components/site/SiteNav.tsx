@@ -2,11 +2,7 @@ import Link from "next/link";
 
 export const PLATFORM_SIGN_IN = "https://platform.ariamed.ai/login";
 
-const links = [
-  { href: "/#visit", label: "How a visit works" },
-  { href: "/#doctors", label: "For doctors" },
-  { href: "/#patients", label: "For patients" },
-];
+const links = [{ href: "/#visit", label: "How a visit works" }];
 
 export function SiteNav() {
   return (

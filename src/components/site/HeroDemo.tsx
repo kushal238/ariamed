@@ -86,12 +86,13 @@ export function HeroDemo() {
 
   return (
     <div
-      className="relative lg:h-[560px]"
+      className="flex flex-col"
       aria-label="A consultation becoming a prescription"
       data-demo-step={step}
       data-demo-complete={step === LAST ? "true" : "false"}
     >
-      <div className="rounded-md border border-border bg-card px-6 py-[22px] text-sm leading-relaxed lg:absolute lg:left-0 lg:top-0 lg:w-[380px]">
+      {/* pb-16 = normal 22px + the 40px the sheet overlaps, so the overlap covers only empty card */}
+      <div className="w-full rounded-md border border-border bg-card px-6 pb-16 pt-[22px] text-sm leading-relaxed lg:w-[380px]">
         <div className="mb-3 flex items-center gap-2.5">
           <span className={cn("h-[9px] w-[9px] rounded-full bg-destructive", transcribing && "animate-pulse")} />
           <span className="font-mono text-[13px] font-medium text-[#4A463F]">{timer}</span>
@@ -118,7 +119,7 @@ export function HeroDemo() {
       </div>
 
       <article
-        className="relative ml-6 mt-[-40px] rounded-md border border-border bg-card px-7 py-[26px] shadow-soft sm:ml-10 lg:absolute lg:bottom-0 lg:right-0 lg:ml-0 lg:mt-0 lg:w-[400px]"
+        className="relative z-10 -mt-10 w-[calc(100%-24px)] self-end rounded-md border border-border bg-card px-7 py-[26px] shadow-soft sm:w-[calc(100%-40px)] lg:w-[400px]"
         aria-label="Prescription drafted by Aria"
       >
         <div className="flex items-start justify-between border-b border-foreground pb-3">
@@ -150,9 +151,9 @@ export function HeroDemo() {
                   {f.label}
                 </dt>
                 <dd className="m-0">
-                  <span className={cn("transition-opacity duration-300", shown ? "opacity-100" : "opacity-0")}>
+                  <div className={cn("inline-block align-top transition-opacity duration-300", shown ? "opacity-100" : "opacity-0")}>
                     {f.value}
-                  </span>
+                  </div>
                   {drafting && j === fieldsShown - 1 && <Cursor />}
                   {!shown && !reduced && j === fieldsShown && (
                     <span aria-hidden="true" className="inline-block h-[9px] w-[120px] rounded-[3px] bg-hairline align-middle" />
