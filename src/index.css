@@ -8,110 +8,57 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Base Colors - Clean, Clinical but Modern */
-    --background: 0 0% 100%;
-    --foreground: 222 47% 11%;
+    /* Warm paper ground, ink, one teal action, rose only for recording. Same tokens as the doctor app. */
+    --background: 43 28% 95%;        /* #F5F3EE */
+    --foreground: 40 5% 10%;         /* #1C1B19 */
 
-    /* Card & Surfaces */
     --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card-foreground: 40 5% 10%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
+    --popover-foreground: 40 5% 10%;
 
-    /* Primary Brand - Deep Teal */
-    --primary: 191 91% 37%;
-    --primary-foreground: 210 40% 98%;
-    --primary-glow: 199 89% 85%;
+    --primary: 175 76% 25%;          /* #0F6E66 */
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 175 40% 90%;
 
-    /* Secondary - Soft Blue/Grey */
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222 47% 11.2%;
+    --secondary: 40 20% 93%;
+    --secondary-foreground: 40 5% 10%;
 
-    /* Muted - Subtler text */
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 40 20% 93%;
+    --muted-foreground: 40 7% 43%;   /* #6F6A60 */
 
-    /* Accent - Vibrant Purple/Indigo for gradients */
-    --accent: 262 83% 58%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 175 76% 25%;
+    --accent-foreground: 0 0% 100%;
 
-    /* Functional Colors */
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --success: 142 71% 45%;
-    --success-foreground: 210 40% 98%;
+    --destructive: 346 84% 50%;      /* #E11D48, recording */
+    --destructive-foreground: 0 0% 100%;
+    --success: 175 76% 25%;
+    --success-foreground: 0 0% 100%;
 
-    /* Borders & Inputs */
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 199 89% 48%;
+    --border: 43 21% 87%;            /* #E4E0D6 */
+    --hairline: 42 25% 92%;          /* #F0EDE6 */
+    --input: 40 18% 82%;             /* #D9D4C8 */
+    --ring: 175 76% 25%;
 
-    --radius: 1rem;
+    --radius: 6px;
 
-    /* Modern Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(199, 89%, 48%), hsl(210, 95%, 55%));
-    --gradient-card: linear-gradient(to bottom right, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.4));
+    --gradient-hero: none;
+    --gradient-card: none;
 
-    /* Shadows */
-    --shadow-soft: 0 8px 30px -10px rgba(0, 0, 0, 0.05);
-    --shadow-medium: 0 20px 40px -12px rgba(0, 0, 0, 0.1);
-    --shadow-glow: 0 0 20px -5px hsl(199 89% 48% / 0.3);
+    --shadow-soft: 0 18px 40px -24px rgba(28, 27, 25, 0.35);
+    --shadow-medium: 0 18px 40px -24px rgba(28, 27, 25, 0.35);
+    --shadow-glow: none;
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222 47% 11%;
-    --foreground: 210 40% 98%;
-
-    --card: 222 47% 11%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222 47% 11%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 199 89% 48%;
-    --primary-foreground: 222 47% 11.2%;
-    --primary-glow: 199 89% 20%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 262 83% 58%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 199 89% 48%;
-
-    --gradient-hero: linear-gradient(135deg, hsl(199, 89%, 48%), hsl(210, 95%, 55%));
-    --gradient-card: linear-gradient(to bottom right, rgba(30, 41, 59, 0.8), rgba(30, 41, 59, 0.4));
-
-    --shadow-soft: 0 8px 30px -10px rgba(0, 0, 0, 0.3);
-    --shadow-medium: 0 20px 40px -12px rgba(0, 0, 0, 0.4);
-    --shadow-glow: 0 0 20px -5px hsl(199 89% 48% / 0.3);
-
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-background: 43 28% 95%;
+    --sidebar-foreground: 40 5% 10%;
+    --sidebar-primary: 175 76% 25%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 40 20% 93%;
+    --sidebar-accent-foreground: 40 5% 10%;
+    --sidebar-border: 43 21% 87%;
+    --sidebar-ring: 175 76% 25%;
   }
+
 }
 
 @layer base {
@@ -129,21 +76,14 @@ All colors MUST be HSL.
     -moz-osx-font-smoothing: grayscale;
   }
 
-  @media (min-width: 1024px) {
-    html {
-      font-size: 17px;
-    }
-  }
 
   /* Performance optimizations */
   * {
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* Optimize fixed elements */
-  nav {
-    will-change: transform;
-    transform: translateZ(0);
+  ::selection {
+    background: hsl(var(--primary) / 0.18);
   }
 }
 

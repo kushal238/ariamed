@@ -1,9 +1,14 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Instrument_Sans, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import "../src/index.css";
 import { Providers } from "./providers";
 
-const inter = Inter({ subsets: ["latin"] });
+const sans = Instrument_Sans({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--font-sans" });
+const serif = Instrument_Serif({ subsets: ["latin"], weight: "400", style: ["normal", "italic"], variable: "--font-serif" });
+const mono = JetBrains_Mono({ subsets: ["latin"], weight: "500", variable: "--font-mono" });
+
+const DESCRIPTION =
+  "Aria listens to the consultation, drafts the prescription for you to review, and keeps every visit on file for you and the patient. Built for clinics in India.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.ariamed.ai"),
@@ -11,11 +16,10 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   title: {
-    default: "Aria Healthcare - The Future of Medical Records",
-    template: "%s | Aria Healthcare",
+    default: "Aria. The prescription, finally kept.",
+    template: "%s | Aria",
   },
-  description:
-    "Transform your healthcare practice with Aria's AI-powered medical record management. Streamline workflows, enhance diagnosis, and improve patient care.",
+  description: DESCRIPTION,
   keywords: [
     "medical records",
     "healthcare",
@@ -32,10 +36,9 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://www.ariamed.ai",
-    title: "Aria Healthcare - The Future of Medical Records",
-    description:
-      "Transform your healthcare practice with Aria's AI-powered medical record management. Streamline workflows, enhance diagnosis, and improve patient care.",
-    siteName: "Aria Healthcare",
+    title: "Aria. The prescription, finally kept.",
+    description: DESCRIPTION,
+    siteName: "Aria",
     images: [
       {
         url: "/aria-site.png",
@@ -47,9 +50,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Aria Healthcare - The Future of Medical Records",
-    description:
-      "Transform your healthcare practice with Aria's AI-powered medical record management.",
+    title: "Aria. The prescription, finally kept.",
+    description: DESCRIPTION,
     images: ["/aria-site.png"],
   },
   robots: {
@@ -91,8 +93,7 @@ const jsonLd = {
       name: "Aria Healthcare",
       applicationCategory: "HealthApplication",
       operatingSystem: "Web",
-      description:
-        "AI-powered medical record management platform with voice dictation, smart medication search, and AI-aided diagnosis.",
+      description: DESCRIPTION,
       offers: {
         "@type": "Offer",
         availability: "https://schema.org/ComingSoon",
@@ -107,8 +108,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+    <html lang="en" className={`${sans.variable} ${serif.variable} ${mono.variable}`} suppressHydrationWarning>
+      <body>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
